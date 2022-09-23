@@ -1,0 +1,42 @@
+alias f="open ."
+alias vim="nvim -S ~/.vimrc"
+alias c="cd ~/Code"
+alias zeal="cd ~/Code/zeal"
+alias szsh="source ~/.zshrc"
+alias zshconfig="vim ~/.zshrc"
+alias alconfig="vim ~/.aliases/aliases.core"
+alias sshconfig="vim ~/.ssh/config"
+alias vimconfig="vim ~/.vimrc"
+alias icloud="cd ~/iCloud"
+alias dotfiles="cd ~/.dotfiles"
+alias desk="cd ~/Desktop"
+
+# TMUX
+alias sess="tmux-sessionizer"
+
+# Git
+alias gco="git checkout"
+alias gap="git add -p"
+alias gp="git push"
+alias gpu="git push -u origin"
+alias pull="git pull"
+alias gc="git commit -S -m"
+alias greset='git reset $(git commit-tree HEAD^{tree} -m'
+alias glog="git log --oneline"
+alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias gitnuke="git branch | grep -v "master\|main" | xargs git branch -D"
+
+# Ruby/Rails
+alias rs="bin/rails s"
+alias rc="bin/rails c"
+alias be="bundle exec"
+alias ber="bundle exec rspec"
+
+# Helpers
+alias k="kubectl"
+alias p="ping 8.8.8.8"
+alias ip="curl https://icanhazip.com"
+alias killadobe="sudo kill $(ps aux | grep adobe | grep -v grep | awk '{print $2}')"
+alias fixdisplays="displayplacer list"
+alias python="python3"
+alias mcserver="ssh -i ~/.ssh/aws-minecraft.cer ec2-user@35.84.216.99"

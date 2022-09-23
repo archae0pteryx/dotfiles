@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# can do on mult paths
+# find . -mindepth 1 -maxdepth 1 -type d | fzf
+
+# session folder path
+session=$(find ~/Downloads ~/Desktop ~/Code ~/Code/zeal -mindepth 1 -maxdepth 1 -type d | fzf)
+
+# basename (just name) - make sure any . in name turns into _
+session_name=$(basename "$session" | tr . _)
+
+# create session with name using fzf
+if ! tmux has-session -t "$session_name" 2> /dev/null; then
+	tmux new-session -s "$session_name" -c "$session" -d
+fi
+
+tmux switch-client -t "$session_name"

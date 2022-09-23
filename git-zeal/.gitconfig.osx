@@ -1,0 +1,12 @@
+[credential]
+	helper = store
+[user]
+	name = Ryan Lewis
+	email = aarchae0pteryxx@gmail.com
+	signingkey = 63C05C38D4B74420BB036CD57E4632EC44C028C5
+[init]
+	defaultBranch = main
+[commit]
+	gpgsign = true
+[pull]
+	rebase = true

@@ -1,0 +1,42 @@
+# Docker
+alias d="docker"
+alias dpsa="docker ps -a"
+alias dps="docker ps"
+alias ds="docker ps -q | xargs docker stop"
+alias drm="docker rm"
+alias drma="docker ps -a -q -f status=exited | xargs docker rm"
+alias drmia="docker rmi $(docker images | awk '{print $3}' | grep -v 'IMAGE')"
+alias drmi="docker rmi"
+alias di="docker images"
+alias dvl="docker volume ls"
+alias dvrm="docker volume rm"
+alias dvrma="docker volume rm $(docker volume ls | awk '{print $2}' | grep -v 'VOLUME')"
+
+dockerNuke() {
+  docker ps -q | xargs docker stop
+  docker rmi $(docker images | awk '{print $3}' | grep -v 'IMAGE')
+  docker system prune -f
+}
+
+# Compose
+alias dc="docker compose"
+alias dcu="dc up"
+alias dcb="dc build"
+alias dcbn="dcb --no-cache"
+alias dcd="dc down"
+alias dcdv="dcd -v"
+alias dcrebuild="dcdv && dcbn"
+alias dcl="dc logs -f"
+alias dcr="dc restart"
+
+# docker volume rm $(docker volume list | grep -vFE mysql | awk '{print $2}')
+# docker rmi $(docker images | grep -vFE mysql | awk '{print $1}')
+# docker rmi $(docker images | awk '{print $3}')
+# docker ps -a -q -f status=exited | xargs docker rm
+
+# docker ps -q | xargs docker rm
+# docker ps -q | xargs docker stop
+
+# docker ps -a -q --filter ancestor=ubuntu | xargs docker rm
+
+# docker rm $(docker ps -a | grep -v "docker-ssh-exec" | awk 'NR>1 {print $1}')

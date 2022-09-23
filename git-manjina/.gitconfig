@@ -1,0 +1,8 @@
+[maintenance]
+	repo = /home/ryan/.zsh-znap/zsh-snap
+[user]
+	email = github@pocketcereal.com
+	name = archae0pteryx
+	signingkey = C7144091E6587F20
+[credential]
+	helper = cache
