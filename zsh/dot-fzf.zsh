@@ -1,7 +1,6 @@
 SYS=$(uname -a)
 
 function osx () {
-  echo "[+] setup fzf osx"
   if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
     PATH="${PATH:+${PATH}:}/usr/local/opt/fzf/bin"
   fi
@@ -10,7 +9,6 @@ function osx () {
 }
 
 function linux () {
-  echo "[+] setup fzf linux"
   if [[ ! "$PATH" == */usr/bin/fzf* ]]; then
     PATH="${PATH:+${PATH}:}/usr/bin/fzf"
   fi
