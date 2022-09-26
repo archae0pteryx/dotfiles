@@ -18,7 +18,7 @@ set undolevels=1000
 let mapleader = " "
 nnoremap <leader>pv :Vex<CR>
 nnoremap <leader>ph :Seh<CR>
-nnoremap <leader><CR> :so ~/.vimrc<CR>
+nnoremap <leader><CR> :so ~/.config/nvim/init.vim<CR>
 inoremap jk <esc>
 nnoremap <C-p> :GFiles<CR>
 nnoremap <leader>pf :Files<CR>
@@ -42,6 +42,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
 
 " Rust LSM Configs
 Plug 'neoclide/coc.nvim', { 'branch': 'release'  }
@@ -58,10 +59,14 @@ nnoremap <C-\> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 let NERDTreeShowHidden=1
 let g:rustfmt_autosave = 1
+let NERDTreeShowLineNumbers=1
+autocmd FileType nerdtree setlocal relativenumber
 
 filetype plugin indent on
 "let g:auto_save_events = ["InsertLeave", "TextChanged", "CompleteDone"]
 "let g:auto_save = 1
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
 
 set rtp+=~/.vim/plugged/fzf.vim
 
