@@ -58,10 +58,12 @@ nnoremap <C-\> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 let NERDTreeShowHidden=1
 let g:rustfmt_autosave = 1
+
 filetype plugin indent on
 "let g:auto_save_events = ["InsertLeave", "TextChanged", "CompleteDone"]
 "let g:auto_save = 1
 
 set rtp+=~/.vim/plugged/fzf.vim
+
 autocmd vimenter * ++nested colorscheme gruvbox
 inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "<Tab>"

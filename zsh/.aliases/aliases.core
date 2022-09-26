@@ -1,5 +1,5 @@
 alias f="open ."
-alias vim="nvim -S ~/.vimrc"
+alias vim="nvim"
 alias c="cd ~/Code"
 alias zeal="cd ~/Code/zeal"
 alias szsh="source ~/.zshrc"
