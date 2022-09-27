@@ -10,7 +10,7 @@ alias vimconfig="vim ~/.config/nvim/init.vim"
 alias icloud="cd ~/iCloud"
 alias dotfiles="cd ~/.dotfiles"
 alias desk="cd ~/Desktop"
-
+alias dotfiles="cd ~/.dotfiles"
 # TMUX
 alias sess="tmux-sessionizer"
 

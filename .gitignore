@@ -1,4 +1,5 @@
 icloud*
+*.bak
 .DS_Store
 tmp
 vim/dot-local/share/nvim
