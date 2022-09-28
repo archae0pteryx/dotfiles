@@ -1,3 +1,16 @@
+# Natural scrolling and accel
+sudo /usr/share/X11/xorg.conf.d/40-libinput.conf
+
+Section "InputClass"
+	Identifier "Logitech Mouse 1000dpi"
+	MatchVendor "Logitech"
+	MatchProduct "USB Optical Mouse"
+	Driver "libinput"
+	MatchIsPointer "yes"
+	Option "AccelProfile" "flat"
+	Option "AccelSpeed" "-0.6"
+EndSection
+
 # PBCOPY alt
 sudo pacman -S xsel
 
