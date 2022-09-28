@@ -1,10 +1,6 @@
-[maintenance]
-	repo = /home/ryan/.zsh-znap/zsh-snap
 [user]
 	email = github@pocketcereal.com
 	name = archae0pteryx
 	signingkey = 6D7E1D70FC7AA693
-[credential]
-	helper = cache
 [init]
 	defaultBranch = main
