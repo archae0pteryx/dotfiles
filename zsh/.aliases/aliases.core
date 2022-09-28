@@ -11,6 +11,12 @@ alias icloud="cd ~/iCloud"
 alias dotfiles="cd ~/.dotfiles"
 alias desk="cd ~/Desktop"
 alias dotfiles="cd ~/.dotfiles"
+alias i3config="vim ~/.i3/config"
+alias i3statusconfig="vim ~/.i3/i3status.conf"
+
+alias pbcopy='xsel --clipboard --input'
+alias pbpaste='xsel --clipboard --output'
+
 # TMUX
 alias sess="tmux-sessionizer"
 

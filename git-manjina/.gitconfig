@@ -3,7 +3,7 @@
 [user]
 	email = github@pocketcereal.com
 	name = archae0pteryx
-	signingkey = C7144091E6587F20
+	signingkey = 6D7E1D70FC7AA693
 [credential]
 	helper = cache
 [init]

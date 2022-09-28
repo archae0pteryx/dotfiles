@@ -2,4 +2,5 @@ icloud*
 *.bak
 .DS_Store
 tmp
-vim/dot-local/share/nvim
+vim/.local/share/nvim
+vim/.local/share/sites

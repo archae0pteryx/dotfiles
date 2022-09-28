@@ -2,6 +2,7 @@ ZSH_THEME="fino"
 
 plugins=(zsh-autosuggestions git docker sudo)
 
+export GPG_TTY=$(tty)
 export PATH="$PATH:$HOME/.local/bin:/usr/local/sbin"
 export ZSH="$HOME/.oh-my-zsh"
 export NVM_DIR="$HOME/.nvm"
@@ -18,6 +19,5 @@ fi
 . "$HOME/.cargo/env"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 source ~/.aliases/aliases.core
 source $ZSH/oh-my-zsh.sh
