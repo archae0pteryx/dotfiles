@@ -5,7 +5,7 @@ syntax enable
 set guicursor=
 set showcmd
 set scrolloff=8
-set number
+"set number
 set relativenumber
 set softtabstop=2 softtabstop=2
 set shiftwidth=2

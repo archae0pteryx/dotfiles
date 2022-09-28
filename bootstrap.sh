@@ -1,4 +1,7 @@
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
 # Natural scrolling and accel
+
 sudo /usr/share/X11/xorg.conf.d/40-libinput.conf
 
 Section "InputClass"
