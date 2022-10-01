@@ -1,12 +1,26 @@
-[credential]
-	helper = store
 [user]
-	name = Ryan Lewis
-	email = aarchae0pteryxx@gmail.com
-	signingkey = 63C05C38D4B74420BB036CD57E4632EC44C028C5
+	name = Ryan
+	email = thefakeryan@icloud.com
+	signingkey = A86625A64721731855A55EF027C7EF71AE61C311
+[pull]
+	rebase = false
+
+[core]
+	excludesfile = /Users/ryan/.gitignore
+	editor = code --wait
+	ignorecase = false
 [init]
 	defaultBranch = main
+[alias]
+	squash-all = "!f(){ git reset $(git commit-tree HEAD^{tree} -m \"${1:-A new start}\");};f"
 [commit]
 	gpgsign = true
-[pull]
-	rebase = true
+[tag]
+	forceSignAnnotated = true
+[gpg]
+	program = gpg2
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
