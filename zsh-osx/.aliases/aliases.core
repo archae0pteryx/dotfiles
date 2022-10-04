@@ -14,8 +14,8 @@ alias dotfiles="cd ~/.dotfiles"
 alias i3config="vim ~/.i3/config"
 alias i3statusconfig="vim ~/.i3/i3status.conf"
 alias kittyconfig="vim ~/.config/kitty/kitty.conf"
-alias pbcopy='xsel --clipboard --input'
-alias pbpaste='xsel --clipboard --output'
+#alias pbcopy='xsel --clipboard --input'
+#alias pbpaste='xsel --clipboard --output'
 alias nvm16="nvm use v16"
 alias nvm14="nvm use v14"
 
