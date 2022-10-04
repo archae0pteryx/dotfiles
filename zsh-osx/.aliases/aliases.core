@@ -28,7 +28,7 @@ alias gap="git add -p"
 alias gp="git push"
 alias gpu="git push -u origin"
 alias pull="git pull"
-alias gc="git commit -S -m"
+alias commit="git commit -S -m"
 alias greset='git reset $(git commit-tree HEAD^{tree} -m'
 alias glog="git log --oneline"
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
