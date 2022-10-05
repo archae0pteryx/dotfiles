@@ -23,6 +23,7 @@ alias nvm14="nvm use v14"
 alias sess="tmux-sessionizer"
 
 # Git
+alias save="git commit -S -am 'wip'"
 alias gco="git checkout"
 alias gap="git add -p"
 alias gp="git push"
