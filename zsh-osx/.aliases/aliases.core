@@ -19,6 +19,13 @@ alias kittyconfig="vim ~/.config/kitty/kitty.conf"
 alias nvm16="nvm use v16"
 alias nvm14="nvm use v14"
 
+# Yabai
+alias ydisplay="yabai -m query --spaces --display"
+alias yconfig="vim ~/.dotfiles/yabai/.config/skhd/skhdrc"
+alias yabaiconfig="vim ~/.dotfiles/yabai/.config/yabai/yabairc"
+alias dotconfig="code ~/.dotfiles"
+
+
 # TMUX
 alias sess="tmux-sessionizer"
 
