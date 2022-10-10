@@ -1,6 +1,16 @@
-ZSH_THEME="fino"
+# Dont forget to update .stow-local-ignore
+source ~/.dotfiles/zsh-osx/.zsh/.plugins/zsh-snap/znap.zsh
+znap source marlonrichert/zsh-autocomplete
+#zstyle ':znap:*' repos-dir ~/.zsh/.plugins
+#zstyle ':autocomplete:*' list-lines 16
+#bindkey -M menuselect '\r' .accept-line
+#zstyle ':autocomplete:*' fzf-completion yes
+#source ~/.zsh/zsh-snap/znap.zsh
+#znap source marlonrichert/zsh-autocomplete
 
-plugins=(zsh-autosuggestions git docker sudo)
+ZSH_THEME="nicoulaj"
+
+plugins=(git docker sudo) 
 
 export GPG_TTY=$(tty)
 export PATH="$PATH:$HOME/.local/bin:/usr/local/sbin"
@@ -19,5 +29,7 @@ fi
 . "$HOME/.cargo/env"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source ~/.aliases/aliases.core
+
+source <(cat ~/.aliases/*.alias)
 source $ZSH/oh-my-zsh.sh
+# source ~/.aliases/eagle.motd

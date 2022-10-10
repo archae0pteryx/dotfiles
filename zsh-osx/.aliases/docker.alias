@@ -1,5 +1,6 @@
 # Docker
 alias d="docker"
+alias k="kubectl"
 alias dpsa="docker ps -a"
 alias dps="docker ps"
 alias ds="docker ps -q | xargs docker stop"

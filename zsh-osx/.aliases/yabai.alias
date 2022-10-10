@@ -1,0 +1,7 @@
+alias ydisplays="yabai -m query --displays"
+alias ydisplay="yabai -m query --displays --display"
+alias yspaces="yabai -m query --spaces"
+alias yspace="yabai -m query --spaces --space"
+
+alias ywindows="yabai -m query --windows"
+alias ywindow="yabai -m query --windows --window"

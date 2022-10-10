@@ -1,15 +1,22 @@
+#.load ~/.config/skhd/set_default_display
+
 # refresh skhd
 ctrl + alt + cmd - r : skhd -r
 
-# open apps
-ctrl + alt - f2 : /Applications/Firefox\ Developer\ Edition.app/Contents/MacOS/firefox --new-tab about:newtab
+# space destroy all without windows
+ctrl + alt + shift - w : yabai -m query --spaces \
+| jq -re 'map(select(."windows" == []).index) | reverse | .[]' \
+| xargs -I % sh -c 'yabai -m space % --destroy'
 
-ctrl + alt - f3 : bash -c "~/.dotfiles/yabai/.config/skhd/open-iterm2.sh"
-ctrl + alt - f4 : open -a slack
-ctrl + alt - f5 : open -a iCal
-ctrl + alt - f6 : open -a mail
-ctrl + alt - f7 : open -a discord
-ctrl + alt - f8 : open -a spotify
+# open apps
+shift - f2 : /Applications/Firefox\ Developer\ Edition.app/Contents/MacOS/firefox --new-tab about:newtab
+
+shift - f3 : bash -c "~/.dotfiles/yabai/.config/skhd/open-iterm2.sh"
+shift - f4 : open -a slack
+shift - f5 : open -a iCal
+shift - f6 : open -a mail
+shift - f7 : open -a discord
+shift - f8 : open -a spotify
 
 # windows
 alt - h : yabai -m window --focus west
@@ -23,7 +30,7 @@ ctrl + shift - n : yabai -m space --create && \
   yabai -m space --focus "$index"
 
 # create and move
-ctrl + shift + alt - n : yabai -m space --create && \
+shift + ctrl + alt - n : yabai -m space --create && \
                   index="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
                   yabai -m window --space "${index}" && \
                   yabai -m space --focus "${index}"
@@ -53,8 +60,6 @@ alt + shift - 7 : space=7 && yabai -m window --space "$space" && yabai -m space 
 alt + shift - 8 : space=8 && yabai -m window --space "$space" && yabai -m space --focus "$space"
 alt + shift - 9 : space=9 && yabai -m window --space "$space" && yabai -m space --focus "$space"
 alt + shift - 0 : space=0 && yabai -m window --space "$space" && yabai -m space --focus "$space"
-
-ctrl + alt + cmd - c : for space in $(yabai -m query --spaces --display | jq -r 'map(select(.windows | length == 0).index)' | jq -r '.[]'); do yabai -m space ${space} --destroy done
 
 ### ---------------
 # focus window

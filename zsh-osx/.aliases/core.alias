@@ -1,30 +1,36 @@
+alias szsh="source ~/.zshrc"
+
+# App aliases
 alias f="open ."
 alias vim="nvim"
+alias python="python3"
+
+# Change dir / open
 alias c="cd ~/Code"
 alias zeal="cd ~/Code/zeal"
-alias szsh="source ~/.zshrc"
-alias zshconfig="vim ~/.zshrc"
-alias alconfig="vim ~/.aliases/aliases.core"
-alias sshconfig="vim ~/.ssh/config"
-alias vimconfig="vim ~/.config/nvim/init.vim"
-alias icloud="cd ~/iCloud"
 alias dotfiles="cd ~/.dotfiles"
 alias desk="cd ~/Desktop"
-alias dotfiles="cd ~/.dotfiles"
+alias icloud="cd ~/iCloud"
+
+# Config Editing
+alias zshconfig="vim ~/.zshrc"
+alias alconfig="vim ~/.aliases/"
+alias sshconfig="vim ~/.ssh/config"
+alias vimconfig="vim ~/.config/nvim/init.vim"
+alias dotconfig="vim ~/.dotfiles"
+alias yabaiconfig="vim ~/.config/yabai/yabairc"
+alias skhdconfig="vim ~/.config/skhd/skhdrc"
+
+# NVM
+alias nvm16="nvm use v16"
+alias nvm14="nvm use v14"
+
+# Linux
 alias i3config="vim ~/.i3/config"
 alias i3statusconfig="vim ~/.i3/i3status.conf"
 alias kittyconfig="vim ~/.config/kitty/kitty.conf"
 #alias pbcopy='xsel --clipboard --input'
 #alias pbpaste='xsel --clipboard --output'
-alias nvm16="nvm use v16"
-alias nvm14="nvm use v14"
-
-# Yabai
-alias ydisplay="yabai -m query --spaces --display"
-alias yconfig="vim ~/.dotfiles/yabai/.config/skhd/skhdrc"
-alias yabaiconfig="vim ~/.dotfiles/yabai/.config/yabai/yabairc"
-alias dotconfig="code ~/.dotfiles"
-
 
 # TMUX
 alias sess="tmux-sessionizer"
@@ -49,10 +55,8 @@ alias be="bundle exec"
 alias ber="bundle exec rspec"
 
 # Helpers
-alias k="kubectl"
 alias p="ping 8.8.8.8"
 alias ip="curl https://icanhazip.com"
 alias killadobe="sudo kill $(ps aux | grep adobe | grep -v grep | awk '{print $2}')"
 alias fixdisplays="displayplacer list"
-alias python="python3"
 alias mcserver="ssh -i ~/.ssh/aws-minecraft.cer ec2-user@35.84.216.99"
