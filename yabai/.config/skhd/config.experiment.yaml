@@ -1,0 +1,26 @@
+# display
+# space
+# window
+# float
+# application
+
+# Check if yabai / skhd are running
+# if ! pgrep -xq yabai; then
+#   echo "yabai is not running"
+#   exit 1
+# fi
+
+
+# display (verb, obj, sub)
+# focus this display
+
+labels:
+  default: main
+  1: left
+  2: right
+
+commands:
+  - display:
+    focus:
+      main:
+        

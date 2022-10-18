@@ -1,4 +1,5 @@
-#.load ~/.config/skhd/set_default_display
+# .load ~/.config/skhd/create_and_switch.sh
+#.load ~/.config/skhd/set_default_display.sh
 
 # refresh skhd
 ctrl + alt + cmd - r : skhd -r
@@ -9,7 +10,7 @@ ctrl + alt + shift - w : yabai -m query --spaces \
 | xargs -I % sh -c 'yabai -m space % --destroy'
 
 # open apps
-shift - f2 : /Applications/Firefox\ Developer\ Edition.app/Contents/MacOS/firefox --new-tab about:newtab
+shift - f2 : ~/.config/skhd/create_and_switch.sh && /Applications/Firefox\ Developer\ Edition.app/Contents/MacOS/firefox --new-tab about:newtab
 
 shift - f3 : bash -c "~/.dotfiles/yabai/.config/skhd/open-iterm2.sh"
 shift - f4 : open -a slack
@@ -23,6 +24,10 @@ alt - h : yabai -m window --focus west
 alt - l : yabai -m window --focus east
 alt - j : yabai -m window --focus south
 alt - k : yabai -m window --focus north
+
+
+
+
 
 # create blank and switch
 ctrl + shift - n : yabai -m space --create && \

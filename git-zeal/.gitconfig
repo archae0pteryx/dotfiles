@@ -26,3 +26,4 @@
 	required = true
 [maintenance]
 	repo = /Users/ryan/.dotfiles/zsh-osx/.zsh/.plugins/zsh-snap
+	repo = /Users/ryan/.dotfiles/zsh-osx/.zsh/.plugins/zsh-autocomplete
