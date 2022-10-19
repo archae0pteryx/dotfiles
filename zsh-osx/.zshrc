@@ -1,17 +1,17 @@
-# Dont forget to update .stow-local-ignore
-autoload -U compinit promptinit
 source ~/.dotfiles/zsh-osx/.zsh/.plugins/zsh-snap/znap.zsh
+autoload -U compinit promptinit
+zstyle ':znap:*' repos-dir ~/.dotfiles/zsh-osx/.zsh/.plugins
+
 znap source marlonrichert/zsh-autocomplete
-#zstyle ':znap:*' repos-dir ~/.zsh/.plugins
+znap source zsh-users/zsh-autosuggestions
+znap source zsh-users/zsh-syntax-highlighting
+
 #zstyle ':autocomplete:*' list-lines 16
-#bindkey -M menuselect '\r' .accept-line
 #zstyle ':autocomplete:*' fzf-completion yes
-#source ~/.zsh/zsh-snap/znap.zsh
-#znap source marlonrichert/zsh-autocomplete
 
 ZSH_THEME="nicoulaj"
 
-plugins=(git docker sudo) 
+plugins=(git sudo) 
 export PATH="$PATH:$HOME/Code/yabster/target/debug"
 export GPG_TTY=$(tty)
 export PATH="$PATH:$HOME/.local/bin:/usr/local/sbin"

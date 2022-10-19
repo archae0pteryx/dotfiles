@@ -5,6 +5,3 @@ icloud*
 tmp
 vim/.local/share/nvim
 vim/.local/share/sites
-
-zsh-autocomplete
-zsh-snap
