@@ -1,10 +1,10 @@
-source ~/.dotfiles/zsh-osx/.zsh/.plugins/zsh-snap/znap.zsh
-autoload -U compinit promptinit
-zstyle ':znap:*' repos-dir ~/.dotfiles/zsh-osx/.zsh/.plugins
+source ~/.dotfiles/zsh-osx/.config/zsh/plugins/zsh-snap/znap.zsh
+#source ~/.dotfiles/zsh-osx/.config/zsh-snap/znap.zsh
+#autoload -U compinit promptinit
 
-znap source marlonrichert/zsh-autocomplete
-znap source zsh-users/zsh-autosuggestions
-znap source zsh-users/zsh-syntax-highlighting
+#znap source marlonrichert/zsh-autocomplete
+#znap source zsh-users/zsh-autosuggestions
+#znap source zsh-users/zsh-syntax-highlighting
 
 #zstyle ':autocomplete:*' list-lines 16
 #zstyle ':autocomplete:*' fzf-completion yes
