@@ -1,13 +1,7 @@
-source ~/.dotfiles/zsh-osx/.config/zsh/plugins/zsh-snap/znap.zsh
-#source ~/.dotfiles/zsh-osx/.config/zsh-snap/znap.zsh
+#source ~/.dotfiles/zsh-osx/.config/zsh/plugins/zsh-snap/znap.zsh
 #autoload -U compinit promptinit
 
 #znap source marlonrichert/zsh-autocomplete
-#znap source zsh-users/zsh-autosuggestions
-#znap source zsh-users/zsh-syntax-highlighting
-
-#zstyle ':autocomplete:*' list-lines 16
-#zstyle ':autocomplete:*' fzf-completion yes
 
 ZSH_THEME="nicoulaj"
 
@@ -19,7 +13,7 @@ export ZSH="$HOME/.oh-my-zsh"
 export NVM_DIR="$HOME/.nvm"
 
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 #eval "$(oh-my-posh --init --shell zsh --config /usr/local/opt/oh-my-posh/themes/bubbles.omp.json)"
 
