@@ -21,6 +21,8 @@ alias dotconfig="vim ~/.dotfiles"
 alias yabaiconfig="vim ~/.config/yabai/yabairc"
 alias skhdconfig="vim ~/.config/skhd/skhdrc"
 
+alias trash='mv "$@" ~/.Trash'
+alias emptytrash=''
 # NVM
 alias nvm16="nvm use v16"
 alias nvm14="nvm use v14"

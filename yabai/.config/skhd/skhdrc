@@ -2,7 +2,7 @@
 #.load ~/.config/skhd/set_default_display.sh
 
 # refresh skhd
-ctrl + alt + cmd - r : skhd -r
+ctrl + alt + cmd - r : skhd -r && brew services restart yabai
 
 # space destroy all without windows
 ctrl + alt + shift - w : yabai -m query --spaces \

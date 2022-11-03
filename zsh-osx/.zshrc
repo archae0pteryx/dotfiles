@@ -6,9 +6,10 @@
 ZSH_THEME="nicoulaj"
 
 plugins=(git sudo) 
-export PATH="$PATH:$HOME/Code/yabster/target/debug"
+
+export PATH="$PATH:$HOME/Code/yabski/target/debug"
 export GPG_TTY=$(tty)
-export PATH="$PATH:$HOME/.local/bin:/usr/local/sbin"
+export PATH="$PATH:$HOME/.local/bin:/usr/local/sbin:$HOME/.cargo/bin"
 export ZSH="$HOME/.oh-my-zsh"
 export NVM_DIR="$HOME/.nvm"
 
@@ -20,8 +21,6 @@ export NVM_DIR="$HOME/.nvm"
 if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
    . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
 fi
-
-. "$HOME/.cargo/env"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
