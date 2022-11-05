@@ -1,12 +1,3 @@
-#source ~/.dotfiles/zsh-osx/.config/zsh/plugins/zsh-snap/znap.zsh
-#autoload -U compinit promptinit
-
-#znap source marlonrichert/zsh-autocomplete
-
-ZSH_THEME="nicoulaj"
-
-plugins=(git sudo) 
-
 export PATH="$PATH:$HOME/Code/yabski/target/debug"
 export GPG_TTY=$(tty)
 export PATH="$PATH:$HOME/.local/bin:/usr/local/sbin:$HOME/.cargo/bin"
