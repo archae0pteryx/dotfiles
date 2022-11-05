@@ -1,4 +1,4 @@
-
+git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 
 # Natural scrolling and accel
