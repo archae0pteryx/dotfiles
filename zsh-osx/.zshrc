@@ -24,3 +24,7 @@ fi
 source <(cat ~/.aliases/*.alias)
 source $ZSH/oh-my-zsh.sh
 # source ~/.aliases/eagle.motd
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
+
