@@ -2,7 +2,7 @@ source ~/.config/zsh/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 ZSH_THEME="nicoulaj"
 
-plugins=(git sudo) 
+plugins=(git sudo)
 
 export PATH="$PATH:$HOME/Code/yabski/target/debug"
 export GPG_TTY=$(tty)
