@@ -1,7 +1,4 @@
-#source ~/.dotfiles/zsh-osx/.config/zsh/plugins/zsh-snap/znap.zsh
-#autoload -U compinit promptinit
-
-#znap source marlonrichert/zsh-autocomplete
+source ~/.config/zsh/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 ZSH_THEME="nicoulaj"
 
