@@ -25,7 +25,7 @@ alt - l : yabai -m window --focus east
 alt - j : yabai -m window --focus south
 alt - k : yabai -m window --focus north
 
-
+alt - f : yabai -m window --toggle float
 
 
 

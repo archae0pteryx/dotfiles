@@ -2,13 +2,13 @@ source ~/.config/zsh/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 ZSH_THEME="nicoulaj"
 
-plugins=(git sudo)
+plugins=(git sudo docker)
 
 export PATH="$PATH:$HOME/Code/yabski/target/debug"
-export GPG_TTY=$(tty)
-export PATH="$PATH:$HOME/.local/bin:/usr/local/sbin:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/.local/bin:/usr/local/sbin:$HOME/.cargo/bin:$HOME/.local/share/solana/install/active_release/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export NVM_DIR="$HOME/.nvm"
+export GPG_TTY=$(tty)
 
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
@@ -24,3 +24,5 @@ fi
 source <(cat ~/.aliases/*.alias)
 source $ZSH/oh-my-zsh.sh
 # source ~/.aliases/eagle.motd
+export PATH="$PATH:/usr/local/share/dotnet:$PATH"
+source ~/.config/zsh/auto-nvm

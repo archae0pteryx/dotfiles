@@ -11,7 +11,7 @@ alias zeal="cd ~/Code/zeal"
 alias dotfiles="cd ~/.dotfiles"
 alias desk="cd ~/Desktop"
 alias icloud="cd ~/iCloud"
-
+alias dls="cd ~/Downloads"
 # Config Editing
 alias zshconfig="vim ~/.zshrc"
 alias alconfig="vim ~/.aliases/"
@@ -57,6 +57,7 @@ alias be="bundle exec"
 alias ber="bundle exec rspec"
 
 # Helpers
+alias ports="lsof -Pn -i4"
 alias p="ping 8.8.8.8"
 alias ip="curl https://icanhazip.com"
 alias killadobe="sudo kill $(ps aux | grep adobe | grep -v grep | awk '{print $2}')"
