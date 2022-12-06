@@ -4,8 +4,10 @@ ZSH_THEME="nicoulaj"
 
 plugins=(git sudo docker)
 
-export PATH="$PATH:$HOME/Code/yabski/target/debug"
 export PATH="$PATH:$HOME/.local/bin:/usr/local/sbin:$HOME/.cargo/bin:$HOME/.local/share/solana/install/active_release/bin:$PATH"
+export PATH="$PATH:/usr/local/share/dotnet:$PATH"
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
 export ZSH="$HOME/.oh-my-zsh"
 export NVM_DIR="$HOME/.nvm"
 export GPG_TTY=$(tty)
@@ -24,5 +26,6 @@ fi
 source <(cat ~/.aliases/*.alias)
 source $ZSH/oh-my-zsh.sh
 # source ~/.aliases/eagle.motd
-export PATH="$PATH:/usr/local/share/dotnet:$PATH"
 source ~/.config/zsh/auto-nvm
+
+
