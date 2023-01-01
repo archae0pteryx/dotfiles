@@ -45,7 +45,8 @@ alias gp="git push"
 alias gpu="git push -u origin"
 alias pull="git pull"
 alias commit="git commit -S -m"
-alias greset='git reset $(git commit-tree HEAD^{tree} -m'
+# alias greset='git reset $(git commit-tree HEAD^{tree} -m'
+alias greset="git reset $(git merge-base main $(git rev-parse --abbrev-ref HEAD))"
 alias glog="git log --oneline"
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias gitnuke="git branch | grep -v "master\|main" | xargs git branch -D"
