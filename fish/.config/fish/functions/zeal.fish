@@ -1,3 +1,3 @@
-function zeal --wraps='cd ~/Code/zeal' --description 'alias zeal=cd ~/Code/zeal'
-  cd ~/Code/zeal $argv; 
+function zeal --wraps='cd ~/Code/zeal' --wraps='cd ~/Code/codingzeal' --description 'alias zeal=cd ~/Code/codingzeal'
+  cd ~/Code/codingzeal $argv; 
 end
