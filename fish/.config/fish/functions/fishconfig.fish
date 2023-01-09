@@ -1,3 +1,3 @@
-function fishconfig --wraps='code ~/.config/fish' --description 'alias fishconfig=code ~/.config/fish'
-  code ~/.config/fish $argv; 
+function fishconfig --wraps='code ~/.dotfiles/fish/.config/fish' --description 'alias fishconfig=code ~/.dotfiles/fish/.config/fish'
+  code ~/.dotfiles/fish/.config/fish $argv; 
 end
