@@ -1,14 +1,16 @@
 [user]
-	name = Ryan
-	email = thefakeryan@icloud.com
-	signingkey = A86625A64721731855A55EF027C7EF71AE61C311
+	name = archae0pteryx
+	email = github@pocketcereal.com
+	signingkey = 567BC1CD583A2D88ECF9D9E2F78866C8777EBA3B
+
 [pull]
 	rebase = false
 
 [core]
-	excludesfile = /Users/ryan/.gitignore
+	excludesfile = ~/.config/git/globalgitignore
 	editor = code --wait
 	ignorecase = false
+
 [init]
 	defaultBranch = main
 [alias]
@@ -18,12 +20,10 @@
 [tag]
 	forceSignAnnotated = true
 [gpg]
-	program = gpg2
+	program = gpg
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[maintenance]
-	repo = /Users/ryan/.dotfiles/zsh-osx/.zsh/.plugins/zsh-snap
-	repo = /Users/ryan/.dotfiles/zsh-osx/.zsh/.plugins/zsh-autocomplete
+

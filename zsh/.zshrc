@@ -1,5 +1,5 @@
 source ~/.config/zsh/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-
+ZSH="$HOME/.config/zsh"
 ZSH_THEME="nicoulaj"
 
 plugins=(git sudo docker)
