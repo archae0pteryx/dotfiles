@@ -1,0 +1,9 @@
+set rnu
+set mouse=a
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set smartindent
+set smarttab
+set autoindent
+set showmatch
