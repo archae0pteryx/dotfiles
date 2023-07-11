@@ -2,3 +2,4 @@
 .DS_Store
 *.log
 tmp
+fish_variables
