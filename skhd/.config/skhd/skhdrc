@@ -76,17 +76,21 @@
 # A REFERENCE ONLY, WHEN MAKING YOUR OWN CONFIGURATION..          #
 # ############################################################### #
 
+ctrl + alt + cmd - r : skhd -r
+
+ctrl + alt + cmd - p : yabai -m window --focus recent
+
 # focus window
-# alt - h : yabai -m window --focus west
+alt - h : yabai -m window --focus west
 
 # swap managed window
-# shift + alt - h : yabai -m window --swap north
+shift + alt - h : yabai -m window --swap north
 
 # move managed window
-# shift + cmd - h : yabai -m window --warp east
+shift + cmd - h : yabai -m window --warp east
 
 # balance size of windows
-# shift + alt - 0 : yabai -m space --balance
+shift + alt - 0 : yabai -m space --balance
 
 # make floating window fill screen
 # shift + alt - up     : yabai -m window --grid 1:1:0:0:1:1
