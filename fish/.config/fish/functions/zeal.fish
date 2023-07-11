@@ -1,4 +1,4 @@
-function zeal --wraps='cd /Users/rimraf/Code/codingzeal' --description 'alias zeal=cd /Users/rimraf/Code/codingzeal'
-  cd /Users/rimraf/Code/codingzeal $argv
-        
+function zeal --wraps='cd /Users/zeal/Code/codingzeal' --description 'alias zeal=cd /Users/zeal/Code/codingzeal'
+  cd /Users/zeal/Code/codingzeal $argv
+
 end

@@ -6,7 +6,7 @@ if status is-interactive
 end
 
 
-set -gx PNPM_HOME "/Users/rimraf/Library/pnpm"
+set -gx PNPM_HOME "/Users/zeal/Library/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
   set -gx PATH "$PNPM_HOME" $PATH
 end

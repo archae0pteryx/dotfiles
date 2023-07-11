@@ -1,6 +1,6 @@
 [user]
 	name = archae0pteryx
 	email = github@pocketcereal.com
-	signingkey = /Users/rimraf/.ssh/signing_rsa.pub
+	signingkey = /Users/zeal/.ssh/signing_rsa.pub
 [gpg]
 	format = ssh
