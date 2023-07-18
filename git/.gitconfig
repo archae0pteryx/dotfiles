@@ -4,3 +4,5 @@
 	signingkey = /Users/rimraf/.ssh/signing_rsa.pub
 [gpg]
 	format = ssh
+[pull]
+	rebase = true
