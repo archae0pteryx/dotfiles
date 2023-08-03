@@ -5,4 +5,4 @@
 [gpg]
 	format = ssh
 [pull]
-	rebase = true
+	rebase = false
