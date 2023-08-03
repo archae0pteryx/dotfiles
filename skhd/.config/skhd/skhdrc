@@ -76,21 +76,44 @@
 # A REFERENCE ONLY, WHEN MAKING YOUR OWN CONFIGURATION..          #
 # ############################################################### #
 
-ctrl + alt + cmd - r : skhd -r
+ctrl + alt + cmd - r : skhd -r && yabai --restart-service
 
-ctrl + alt + cmd - p : yabai -m window --focus recent
+ctrl + alt + cmd - l : yabai -m window --resize right:0:100
+ctrl + alt + cmd - h : yabai -m window --resize left:0:-100
+ctrl + alt + cmd - k : yabai -m window --resize top:0:100
+ctrl + alt + cmd - j : yabai -m window --resize bottom:0:-100
+
+# yabai -m space 1 --label firefox
+# yabai -m space 2 --label code
+
+# focus recent
+# ctrl + cmd - l : yabai -m window --focus west
+
+# ctrl + alt + cmd - 0x31 : yabai -m space --focus recent
+
+# + key
+# ctrl + alt + cmd - 0x18 : yabai -m space --move next
+
+# - key
+# ctrl + alt + cmd - 0x1B : yabai -m space --move prev
+
+
+
+# 0x30 + cmd - h : yabai -m window --space previous
+# tab key
+# cmd + 0x30 - l : yabai -m window --focus east
 
 # focus window
-alt - h : yabai -m window --focus west
+# alt - h : yabai -m window --focus west
 
 # swap managed window
-shift + alt - h : yabai -m window --swap north
+# shift + alt - h : yabai -m window --swap north
 
 # move managed window
-shift + cmd - h : yabai -m window --warp east
+# shift + cmd - h : yabai -m window --warp east
 
 # balance size of windows
-shift + alt - 0 : yabai -m space --balance
+# shift + alt - 0 : yabai -m space --balance
 
 # make floating window fill screen
 # shift + alt - up     : yabai -m window --grid 1:1:0:0:1:1

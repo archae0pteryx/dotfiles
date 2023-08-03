@@ -4,3 +4,5 @@
 	signingkey = /Users/zeal/.ssh/signing_rsa.pub
 [gpg]
 	format = ssh
+[pull]
+	rebase = false
