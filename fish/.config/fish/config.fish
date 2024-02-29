@@ -5,10 +5,4 @@ if status is-interactive
   set -gx VOLTA_HOME $HOME/.volta
 end
 
-
-set -gx PNPM_HOME "/Users/zeal/Library/pnpm"
-if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
-end
-
-source (pyenv init - | psub)
+#source (pyenv init - | psub)
