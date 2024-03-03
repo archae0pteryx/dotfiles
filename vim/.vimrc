@@ -7,3 +7,4 @@ set smartindent
 set smarttab
 set autoindent
 set showmatch
+colorscheme habamax
