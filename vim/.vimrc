@@ -11,7 +11,7 @@ set showmatch
 set splitright
 colorscheme habamax
 
-
+inoremap jk <Esc>
 
 let g:NetrwIsOpen=0
 let g:netrw_winsize=20

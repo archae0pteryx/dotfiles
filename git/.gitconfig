@@ -4,7 +4,10 @@
 	signingkey = /home/rimraf/.ssh/github_signing.pub
 [gpg]
 	format = ssh
-[pull]
-	ff = true
+[push]
+   autoSetupRemote = true
+
 [init]
 	defaultBranch = main
+[rerere]
+	enabled = true
