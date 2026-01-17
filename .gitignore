@@ -1,5 +1,7 @@
 .vscode
 .DS_Store
 fish/.config/fish/fish_variables
+fish/.config/fish/config.local.fish
 *.log
 tmp
+.env*

@@ -9,11 +9,16 @@ if status is-interactive
   set -gx PATH "$VOLTA_HOME/bin" $PATH
   set -gx PATH "$GOPATH/bin" $PATH
   set -gx EDITOR "vim"
-  set -gx GOOGLE_APPLICATION_CREDENTIALS /home/rimraf/.vault/gcp/sandbox-405917-e3f6c36d8e86.json
   set -gx PATH "$HOME/.ebcli-virtual-env/executables" $PATH
   tmux new-session
 end
 
+# Source local config for system-specific settings (not tracked in git)
+if test -f ~/.config/fish/config.local.fish
+  source ~/.config/fish/config.local.fish
+end
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/rimraf/.local/share/gcloud/path.fish.inc' ]; . '/home/rimraf/.local/share/gcloud/path.fish.inc'; end
+if test -f "$HOME/.local/share/gcloud/path.fish.inc"
+  source "$HOME/.local/share/gcloud/path.fish.inc"
+end
