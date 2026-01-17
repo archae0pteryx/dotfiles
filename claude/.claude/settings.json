@@ -33,7 +33,7 @@
       "Bash(kubectl exec:*)",
       "Bash(kubectl port-forward:*)",
       "mcp__plugin_stripe_stripe",
-      "Bash(./bin/eyepop-vlm:*)",
+      "Bash(eyepop-vlm)",
       "Read",
       "WebFetch",
       "WebSearch",
@@ -94,6 +94,8 @@
   },
   "enabledPlugins": {
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "ralph-loop@claude-plugins-official": true
+    "ralph-loop@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "serena@claude-plugins-official": true
   }
 }
