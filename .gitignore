@@ -1,5 +1,10 @@
 .vscode
 .DS_Store
+
+# Override global ignores for claude config
+!claude/.claude
+!claude/.claude/**
+!**/CLAUDE.md
 fish/.config/fish/fish_variables
 fish/.config/fish/config.local.fish
 *.log
