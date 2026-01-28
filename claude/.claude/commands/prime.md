@@ -1,8 +1,11 @@
 # Context priming for code projects
 
-- Use any agent at your disposal to do a comprehensive review of the current project
+Utilizing serena and context7 if available, use the following principles to prime your context in an effective manner. Use any agents at your disposal.
+
+- Use any agent at your disposal, review agents or otherwise perform a comprehensive review of the current project.
 - If the serena MCP plugin is avail, use this to map the codebase effectively.
-- Systematically review the project structure using git.
+- Systematically review the project structure using git ls-files. For each concrete module, identify the core patterns and purposes.
+- Understand that comments get stale. Always double check information you read in comments and readmes.
 - Identify key patterns.
 - Identify the entrypoints of the project.
 - Review test files for a deeper understanding.
