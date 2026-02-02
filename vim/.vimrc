@@ -13,8 +13,11 @@ colorscheme habamax
 
 inoremap jk <Esc>
 
+set clipboard=unnamedplus
+
 let g:NetrwIsOpen=0
 let g:netrw_winsize=20
+
 function! ToggleNetrw()
     if g:NetrwIsOpen
         let i = bufnr("$")
@@ -31,5 +34,4 @@ function! ToggleNetrw()
     endif
 endfunction
 
-" Add your own mapping. For example:
 noremap <silent> <leader>e :call ToggleNetrw()<CR>
