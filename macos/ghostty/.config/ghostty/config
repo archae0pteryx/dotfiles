@@ -4,12 +4,17 @@
 font-family = FiraCode Nerd Font
 font-size = 16
 
-# Window
-window-decoration = false
-
 # Theme
 background = #1e1e2e
 foreground = #cdd6f4
 
+# Quick terminal: full width, fixed height, drops from the top.
+# Changing quick-terminal-position requires fully restarting Ghostty.
+quick-terminal-position = top
+quick-terminal-size = 550px
+quick-terminal-screen = mouse
+quick-terminal-animation-duration = 0
+
 # Keybinds
-keybind = alt+cmd+space=toggle_quick_terminal
+# global: works while Ghostty is unfocused (needs Accessibility permission).
+keybind = global:alt+cmd+space=toggle_quick_terminal
