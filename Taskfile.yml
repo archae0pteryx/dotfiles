@@ -1,0 +1,21 @@
+version: '3'
+
+tasks:
+  macos:
+    desc: Stow macOS-specific configs
+    cmds:
+      - stow -t ~ macos/*/
+      - stow -t ~ git nvim vim fish
+      - echo "macOS configs stowed"
+
+  linux:
+    desc: Stow Linux-specific configs
+    cmds:
+      - stow -t ~ linux/*/
+      - stow -t ~ git nvim vim fish
+      - echo "Linux configs stowed"
+
+  default:
+    desc: Show available tasks
+    cmds:
+      - task --list

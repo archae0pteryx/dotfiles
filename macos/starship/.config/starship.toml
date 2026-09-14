@@ -1,0 +1,121 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+format = """
+$os\
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$rust\
+$docker_context\
+$cmd_duration\
+$fill
+> 
+"""
+right_format = """
+$nix_shell\
+$kubernetes\
+"""
+
+palette = 'gruvbox_dark'
+
+[fill]
+symbol = ''
+
+[palettes.gruvbox_dark]
+color_fg0 = '#fbf1c7'
+color_bg1 = '#3c3836'
+color_bg3 = '#665c54'
+color_blue = '#458588'
+color_aqua = '#689d6a'
+color_green = '#98971a'
+color_orange = '#d65d0e'
+color_purple = '#b16286'
+color_red = '#cc241d'
+color_yellow = '#d79921'
+
+[username]
+show_always = false
+style_user = 'dimmed white'
+format = '[$user]($style)'
+disabled = false
+
+[directory]
+style = "fg:color_fg0 bg:color_yellow"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+# style = "dimmed white"
+# format = " [$path]($style)"
+# truncate_to_repo = true
+# truncation_length = 8
+# truncation_symbol = "…"
+
+[hostname]
+style = "bg:yellow fg:red"
+format = '@[$hostname]($style)'
+disabled = false
+ssh_only = true
+ssh_symbol = "🛜"
+
+[python]
+style = "dimmed yellow"
+format = '[$virtualenv]($style)'
+
+[kubernetes]
+disabled = false
+symbol = '⚓︎'
+style = "bg:white fg:blue"
+format = '[$symbol](white)[$context]($style) [$namespace](bg:blue fg:white)'
+contexts = [
+    { context_pattern = "^kind.*", style = "dimmed white", symbol = "💻 " },
+    { context_pattern = "^staging.*", style = "bg:white fg:blue", symbol = "⚓️ " },
+    { context_pattern = "^prod.*", style = "bg:red fg:white", symbol = "⚡️ " },
+]
+
+[nix_shell]
+disabled = false
+symbol = " 👻"
+format = '[$symbol](blue) '
+
+[docker_context]
+symbol = " "
+format = '[ $symbol $context ]($style)'
+
+[git_branch]
+symbol = ""
+style = "dimmest white"
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+style = "dimmed white"
+format = '[$all_status $ahead_behind ]($style)'
+ahead = '✈️'
+modified = "💩"
+up_to_date = "🌈"
+stashed = ""
+
+[golang]
+symbol = " "
+format = '[ $symbol ($version) ]($style)'
+
+
+[nodejs]
+symbol = ""
+format = '[ $symbol ($version) ]($style)'
+
+
+[rust]
+symbol = ""
+format = '[ $symbol ($version) ]($style)'
+
+[time]
+disabled = true
+time_format = "%R"             # Hour:Minute Format
+style = "bg:#33658A"
+format = '[ ♥ $time ]($style)'
+
+[cmd_duration]
+disabled = false
+format = '[$duration]($style)'
