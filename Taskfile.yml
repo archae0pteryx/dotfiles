@@ -1,21 +1,40 @@
 version: '3'
 
+# git, nvim and vim are still managed by nix; do not stow them yet.
+# --no-folding links individual files so apps that write next to their
+# config (copyq, kitty, ...) don't write into this repo.
+
+vars:
+  MACOS_PKGS: alacritty copyq ghostty hammerspoon kitty starship tmux
+  LINUX_PKGS: conky rofi
+  STOW: stow --no-folding -t {{.HOME}}
+
 tasks:
-  macos:
-    desc: Stow macOS-specific configs
-    cmds:
-      - stow -t ~ macos/*/
-      - stow -t ~ git nvim vim fish
-      - echo "macOS configs stowed"
-
-  linux:
-    desc: Stow Linux-specific configs
-    cmds:
-      - stow -t ~ linux/*/
-      - stow -t ~ git nvim vim fish
-      - echo "Linux configs stowed"
-
   default:
     desc: Show available tasks
     cmds:
       - task --list
+
+  macos:
+    desc: Stow macOS configs
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - '{{.STOW}} -d macos -R {{.MACOS_PKGS}}'
+
+  macos:dry:
+    desc: Show what stowing macOS configs would do
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - '{{.STOW}} -d macos -n -v -R {{.MACOS_PKGS}}'
+
+  linux:
+    desc: Stow Linux configs
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - '{{.STOW}} -d linux -R {{.LINUX_PKGS}}'
+
+  linux:dry:
+    desc: Show what stowing Linux configs would do
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - '{{.STOW}} -d linux -n -v -R {{.LINUX_PKGS}}'
