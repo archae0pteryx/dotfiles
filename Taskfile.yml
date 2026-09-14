@@ -1,10 +1,11 @@
 version: '3'
 
-# git, nvim and vim are still managed by nix; do not stow them yet.
 # --no-folding links individual files so apps that write next to their
-# config (copyq, kitty, ...) don't write into this repo.
+# config (copyq, kitty, nvim's lazy-lock.json, ...) don't write into this repo.
+# Linux hosts still get git/vim config from nix, so SHARED_PKGS is macOS-only.
 
 vars:
+  SHARED_PKGS: git nvim vim
   MACOS_PKGS: alacritty copyq ghostty hammerspoon kitty starship tmux
   LINUX_PKGS: conky rofi
   STOW: stow --no-folding -t {{.HOME}}
@@ -19,12 +20,14 @@ tasks:
     desc: Stow macOS configs
     dir: '{{.TASKFILE_DIR}}'
     cmds:
+      - '{{.STOW}} -d . -R {{.SHARED_PKGS}}'
       - '{{.STOW}} -d macos -R {{.MACOS_PKGS}}'
 
   macos:dry:
     desc: Show what stowing macOS configs would do
     dir: '{{.TASKFILE_DIR}}'
     cmds:
+      - '{{.STOW}} -d . -n -v -R {{.SHARED_PKGS}}'
       - '{{.STOW}} -d macos -n -v -R {{.MACOS_PKGS}}'
 
   linux:

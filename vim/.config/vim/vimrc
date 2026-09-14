@@ -1,0 +1,16 @@
+set rnu
+set mouse=a
+set ignorecase
+set whichwrap+=<,>,h,l
+set backspace=eol,start,indent
+set wrap
+colorscheme habamax
+syntax on
+
+set tabstop=2 
+set shiftwidth=2 
+set smarttab
+set expandtab
+set smartindent
+
+inoremap jk <Esc>
