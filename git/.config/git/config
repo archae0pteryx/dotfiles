@@ -44,6 +44,10 @@
 [rerere]
 	enabled = true
 
+# Always talk to GitHub over SSH, even for https:// remotes and URLs.
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+
 [credential "https://github.com"]
 	helper = !gh auth git-credential
 
