@@ -9,14 +9,16 @@ venv
 .terragrunt-cache
 __pycache__
 .pytest_cache
+.devbox
+
+# Local scratch directories prefixed with triple underscores.
 ___*
+
 .env
 *.secret*
-.cursorrules
-.cursorignore
-.worktree*
-worktree*
-___*
-.devbox
-.serena
-.claude/settings.local.json
+
+# Trailing slash matters: a bare `worktree*` also matched any FILE whose name
+# starts with "worktree", which silently hid tracked files such as an agent
+# definition named worktree-coder.md.
+.worktree*/
+worktree*/

@@ -13,6 +13,8 @@
 [core]
 	editor = vim
 	pager = delta
+	# Normalize to LF in the repo, check out platform-native.
+	autocrlf = input
 
 [interactive]
 	diffFilter = delta --color-only
