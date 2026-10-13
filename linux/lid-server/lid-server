@@ -1,0 +1,134 @@
+#!/usr/bin/env bash
+#
+# Keep an Omarchy laptop running with the lid closed so it can serve SSH.
+#
+# On Omarchy the lid is handled in two places. Hyprland's lid bind locks the
+# session and the lock blanks the panel; that stays, it is what keeps a closed
+# laptop cool. systemd-logind is what actually suspends, and that is what the
+# drop-ins next to this script turn off. See README.md for the why.
+#
+# Usage: lid-server [install|remove|status]
+
+set -euo pipefail
+
+here=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+files=(
+  etc/systemd/logind.conf.d/90-lid-server.conf
+  etc/systemd/sleep.conf.d/90-lid-server.conf
+)
+
+die() {
+  echo "lid-server: $*" >&2
+  exit 1
+}
+
+# Value of a logind Manager property or zero-argument method, unquoted.
+logind() {
+  local kind="$1" name="$2"
+  local verb=call
+  [[ $kind == prop ]] && verb=get-property
+  busctl "$verb" org.freedesktop.login1 /org/freedesktop/login1 \
+    org.freedesktop.login1.Manager "$name" 2>/dev/null |
+    awk '{ gsub(/"/, "", $2); print $2 }' || true
+}
+
+# First line of the first readable file among the arguments.
+first() {
+  cat "$@" 2>/dev/null | head -1 || true
+}
+
+# logind rereads logind.conf on SIGHUP. Restarting it instead can take the
+# graphical session down with it.
+reload_logind() {
+  sudo systemctl kill -s HUP systemd-logind.service
+  sleep 1
+}
+
+set_menu_suspend() {
+  # Hides or restores "Suspend" in the Omarchy system menu. Not Omarchy: skip.
+  command -v omarchy-toggle >/dev/null || return 0
+  omarchy-toggle suspend-off "$1"
+}
+
+install_files() {
+  local f
+  for f in "${files[@]}"; do
+    sudo install -Dm644 "$here/$f" "/$f"
+    echo "installed /$f"
+  done
+  reload_logind
+  set_menu_suspend on
+
+  if [[ $(logind prop HandleLidSwitch) != ignore ]]; then
+    echo "logind has not picked up the change yet; reboot to apply it." >&2
+  fi
+  echo
+  status
+}
+
+remove_files() {
+  local f
+  for f in "${files[@]}"; do
+    sudo rm -f "/$f"
+    echo "removed /$f"
+  done
+  reload_logind
+  set_menu_suspend off
+  echo
+  status
+}
+
+check() {
+  local ok="$1" label="$2" value="$3"
+  if [[ $ok == 1 ]]; then
+    printf '  \e[32mok\e[0m    %-28s %s\n' "$label" "$value"
+  else
+    printf '  \e[31mfail\e[0m  %-28s %s\n' "$label" "$value"
+  fi
+}
+
+info() {
+  printf '  \e[2m--\e[0m    %-28s %s\n' "$1" "$2"
+}
+
+status() {
+  local v state ac capacity suspends
+
+  echo "Machine"
+  state=$(first /sys/class/dmi/id/product_name)
+  info "model" "${state:-unknown}"
+  state=$(first /proc/acpi/button/lid/*/state)
+  state=${state##* }
+  info "lid" "${state:-unknown}"
+  ac=$(first /sys/class/power_supply/ADP*/online)
+  capacity=$(first /sys/class/power_supply/BAT*/capacity)
+  info "power" "ac=${ac:-?} battery=${capacity:-?}%"
+
+  echo "Lid and sleep"
+  for v in HandleLidSwitch HandleLidSwitchExternalPower HandleLidSwitchDocked; do
+    state=$(logind prop "$v")
+    check "$([[ $state == ignore ]] && echo 1 || echo 0)" "$v" "${state:-unknown}"
+  done
+  for v in CanSuspend CanHibernate; do
+    state=$(logind call "$v")
+    check "$([[ $state == na || $state == no ]] && echo 1 || echo 0)" "$v" "${state:-unknown}"
+  done
+  suspends=$({ journalctl -b -k -q --no-pager --grep 'PM: suspend entry' 2>/dev/null || true; } | wc -l)
+  check "$([[ $suspends == 0 ]] && echo 1 || echo 0)" "suspends this boot" "$suspends"
+
+  echo "SSH"
+  state=$(systemctl is-active sshd.service 2>/dev/null || true)
+  check "$([[ $state == active ]] && echo 1 || echo 0)" "sshd.service" "${state:-unknown}"
+  state=$(systemctl is-enabled sshd.service 2>/dev/null || true)
+  check "$([[ $state == enabled ]] && echo 1 || echo 0)" "sshd at boot" "${state:-unknown}"
+  info "addresses" "$(ip -4 -o addr show scope global 2>/dev/null | awk '{ printf "%s=%s ", $2, $4 }' || true)"
+}
+
+[[ $EUID -ne 0 ]] || die "run this as your user; it calls sudo itself"
+
+case "${1:-status}" in
+  install) install_files ;;
+  remove) remove_files ;;
+  status) status ;;
+  *) die "usage: lid-server [install|remove|status]" ;;
+esac
