@@ -3,11 +3,13 @@ version: '3'
 # --no-folding links individual files so apps that write next to their
 # config (copyq, kitty, nvim's lazy-lock.json, ...) don't write into this repo.
 # Linux hosts still get git/vim config from nix, so SHARED_PKGS is macOS-only.
+# COMMON_PKGS are stowed on every host.
 
 vars:
-  SHARED_PKGS: git nvim vim
+  SHARED_PKGS: git vim
+  COMMON_PKGS: ghostty nvim
   MACOS_PKGS: alacritty copyq ghostty hammerspoon kitty starship tmux
-  LINUX_PKGS: conky rofi
+  LINUX_PKGS: conky ghostty rofi
   STOW: stow --no-folding -t {{.HOME}}
 
 tasks:
@@ -20,27 +22,39 @@ tasks:
     desc: Stow macOS configs
     dir: '{{.TASKFILE_DIR}}'
     cmds:
-      - '{{.STOW}} -d . -R {{.SHARED_PKGS}}'
+      - '{{.STOW}} -d . -R {{.SHARED_PKGS}} {{.COMMON_PKGS}}'
       - '{{.STOW}} -d macos -R {{.MACOS_PKGS}}'
 
   macos:dry:
     desc: Show what stowing macOS configs would do
     dir: '{{.TASKFILE_DIR}}'
     cmds:
-      - '{{.STOW}} -d . -n -v -R {{.SHARED_PKGS}}'
+      - '{{.STOW}} -d . -n -v -R {{.SHARED_PKGS}} {{.COMMON_PKGS}}'
       - '{{.STOW}} -d macos -n -v -R {{.MACOS_PKGS}}'
 
   linux:
     desc: Stow Linux configs
     dir: '{{.TASKFILE_DIR}}'
     cmds:
+      - '{{.STOW}} -d . -R {{.COMMON_PKGS}}'
       - '{{.STOW}} -d linux -R {{.LINUX_PKGS}}'
+      - task: linux:ghostty-includes
 
   linux:dry:
     desc: Show what stowing Linux configs would do
     dir: '{{.TASKFILE_DIR}}'
     cmds:
+      - '{{.STOW}} -d . -n -v -R {{.COMMON_PKGS}}'
       - '{{.STOW}} -d linux -n -v -R {{.LINUX_PKGS}}'
+
+  linux:ghostty-includes:
+    desc: Point Omarchy's Ghostty config at the stowed shared/linux layers
+    internal: true
+    cmds:
+      - for: ['shared.conf', 'linux.conf']
+        cmd: >-
+          grep -qF '~/.config/ghostty/{{.ITEM}}' {{.HOME}}/.config/ghostty/config ||
+          printf '\nconfig-file = ?~/.config/ghostty/{{.ITEM}}\n' >> {{.HOME}}/.config/ghostty/config
 
   # System-level, so installed into /etc with sudo rather than stowed.
   linux:lid-server:

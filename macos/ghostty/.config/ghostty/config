@@ -8,13 +8,14 @@ font-size = 16
 background = #1e1e2e
 foreground = #cdd6f4
 
-# Quick terminal: full width, fixed height, drops from the top.
+# Quick terminal: position/size live in shared.conf; these are macOS-only.
 # Changing quick-terminal-position requires fully restarting Ghostty.
-quick-terminal-position = top
-quick-terminal-size = 550px
 quick-terminal-screen = mouse
 quick-terminal-animation-duration = 0
 
 # Keybinds
 # global: works while Ghostty is unfocused (needs Accessibility permission).
 keybind = global:alt+cmd+space=toggle_quick_terminal
+
+# Settings shared with Linux
+config-file = ?~/.config/ghostty/shared.conf
