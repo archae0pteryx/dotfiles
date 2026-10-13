@@ -41,3 +41,22 @@ tasks:
     dir: '{{.TASKFILE_DIR}}'
     cmds:
       - '{{.STOW}} -d linux -n -v -R {{.LINUX_PKGS}}'
+
+  # System-level, so installed into /etc with sudo rather than stowed.
+  linux:lid-server:
+    desc: Keep running with the lid closed (never suspend)
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - linux/lid-server/lid-server install
+
+  linux:lid-server:remove:
+    desc: Restore suspend on lid close
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - linux/lid-server/lid-server remove
+
+  linux:lid-server:status:
+    desc: Check lid, sleep and sshd state
+    dir: '{{.TASKFILE_DIR}}'
+    cmds:
+      - linux/lid-server/lid-server status
