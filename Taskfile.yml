@@ -11,6 +11,7 @@ vars:
   MACOS_PKGS: alacritty copyq ghostty hammerspoon kitty starship tmux
   LINUX_PKGS: conky ghostty rofi
   STOW: stow --no-folding -t {{.HOME}}
+  DRY: -n -v
 
 tasks:
   default:
@@ -18,19 +19,167 @@ tasks:
     cmds:
       - task --list
 
+  # Every macOS package has its own task plus a :dry-run variant, so you can
+  # install (or preview) one thing at a time: task macos:nvim:dry-run
+  # Stow itself is idempotent, so re-running a task is safe.
+
   macos:
-    desc: Stow macOS configs
-    dir: '{{.TASKFILE_DIR}}'
+    desc: Stow all macOS configs
     cmds:
-      - '{{.STOW}} -d . -R {{.SHARED_PKGS}} {{.COMMON_PKGS}}'
-      - '{{.STOW}} -d macos -R {{.MACOS_PKGS}}'
+      - task: stow
+        vars: { dir: ., pkgs: '{{.SHARED_PKGS}} {{.COMMON_PKGS}}' }
+      - task: stow
+        vars: { dir: macos, pkgs: '{{.MACOS_PKGS}}' }
 
   macos:dry:
-    desc: Show what stowing macOS configs would do
-    dir: '{{.TASKFILE_DIR}}'
+    aliases: [macos:dry-run]
+    desc: Show what stowing all macOS configs would do
     cmds:
-      - '{{.STOW}} -d . -n -v -R {{.SHARED_PKGS}} {{.COMMON_PKGS}}'
-      - '{{.STOW}} -d macos -n -v -R {{.MACOS_PKGS}}'
+      - task: stow
+        vars: { dir: ., pkgs: '{{.SHARED_PKGS}} {{.COMMON_PKGS}}', dry: '{{.DRY}}' }
+      - task: stow
+        vars: { dir: macos, pkgs: '{{.MACOS_PKGS}}', dry: '{{.DRY}}' }
+
+  # Shared packages (stowed from the repo root, also used on Linux)
+
+  macos:git:
+    desc: Stow git config
+    cmds:
+      - task: stow
+        vars: { dir: ., pkgs: git }
+
+  macos:git:dry-run:
+    desc: Show what stowing git config would do
+    cmds:
+      - task: stow
+        vars: { dir: ., pkgs: git, dry: '{{.DRY}}' }
+
+  macos:vim:
+    desc: Stow vim config
+    cmds:
+      - task: stow
+        vars: { dir: ., pkgs: vim }
+
+  macos:vim:dry-run:
+    desc: Show what stowing vim config would do
+    cmds:
+      - task: stow
+        vars: { dir: ., pkgs: vim, dry: '{{.DRY}}' }
+
+  macos:nvim:
+    desc: Stow nvim config
+    cmds:
+      - task: stow
+        vars: { dir: ., pkgs: nvim }
+
+  macos:nvim:dry-run:
+    desc: Show what stowing nvim config would do
+    cmds:
+      - task: stow
+        vars: { dir: ., pkgs: nvim, dry: '{{.DRY}}' }
+
+  # Ghostty has a shared layer in the root and a macOS layer in macos/
+
+  macos:ghostty:
+    desc: Stow Ghostty config (shared + macOS layers)
+    cmds:
+      - task: stow
+        vars: { dir: ., pkgs: ghostty }
+      - task: stow
+        vars: { dir: macos, pkgs: ghostty }
+
+  macos:ghostty:dry-run:
+    desc: Show what stowing Ghostty config would do
+    cmds:
+      - task: stow
+        vars: { dir: ., pkgs: ghostty, dry: '{{.DRY}}' }
+      - task: stow
+        vars: { dir: macos, pkgs: ghostty, dry: '{{.DRY}}' }
+
+  # macOS-only packages (stowed from macos/)
+
+  macos:alacritty:
+    desc: Stow alacritty config
+    cmds:
+      - task: stow
+        vars: { dir: macos, pkgs: alacritty }
+
+  macos:alacritty:dry-run:
+    desc: Show what stowing alacritty config would do
+    cmds:
+      - task: stow
+        vars: { dir: macos, pkgs: alacritty, dry: '{{.DRY}}' }
+
+  macos:copyq:
+    desc: Stow copyq config
+    cmds:
+      - task: stow
+        vars: { dir: macos, pkgs: copyq }
+
+  macos:copyq:dry-run:
+    desc: Show what stowing copyq config would do
+    cmds:
+      - task: stow
+        vars: { dir: macos, pkgs: copyq, dry: '{{.DRY}}' }
+
+  macos:hammerspoon:
+    desc: Stow hammerspoon config
+    cmds:
+      - task: stow
+        vars: { dir: macos, pkgs: hammerspoon }
+
+  macos:hammerspoon:dry-run:
+    desc: Show what stowing hammerspoon config would do
+    cmds:
+      - task: stow
+        vars: { dir: macos, pkgs: hammerspoon, dry: '{{.DRY}}' }
+
+  macos:kitty:
+    desc: Stow kitty config
+    cmds:
+      - task: stow
+        vars: { dir: macos, pkgs: kitty }
+
+  macos:kitty:dry-run:
+    desc: Show what stowing kitty config would do
+    cmds:
+      - task: stow
+        vars: { dir: macos, pkgs: kitty, dry: '{{.DRY}}' }
+
+  macos:starship:
+    desc: Stow starship config
+    cmds:
+      - task: stow
+        vars: { dir: macos, pkgs: starship }
+
+  macos:starship:dry-run:
+    desc: Show what stowing starship config would do
+    cmds:
+      - task: stow
+        vars: { dir: macos, pkgs: starship, dry: '{{.DRY}}' }
+
+  macos:tmux:
+    desc: Stow tmux config
+    cmds:
+      - task: stow
+        vars: { dir: macos, pkgs: tmux }
+
+  macos:tmux:dry-run:
+    desc: Show what stowing tmux config would do
+    cmds:
+      - task: stow
+        vars: { dir: macos, pkgs: tmux, dry: '{{.DRY}}' }
+
+  stow:
+    internal: true
+    desc: "Run stow for one directory's packages (pass dry to preview)"
+    dir: '{{.TASKFILE_DIR}}'
+    vars:
+      dir: '{{.dir}}'
+      pkgs: '{{.pkgs}}'
+      dry: '{{.dry}}'
+    cmds:
+      - '{{.STOW}} {{.dry}} -d {{.dir}} -R {{.pkgs}}'
 
   linux:
     desc: Stow Linux configs
