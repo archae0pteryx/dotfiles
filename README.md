@@ -21,9 +21,27 @@ Rules:
 ## Usage
 
 ```
-task stow       # stow all packages for this OS
-task stow:dry   # preview
+task stow                         # all macOS packages (default on every OS)
+task stow -- vim                   # just macos/vim
+task stow -- --mac lazyvim         # just macos/lazyvim
+task stow -- --linux               # all Linux packages
+task stow -- --linux nvim          # just linux/nvim
+task stow:dry -- --linux nvim      # list existing files whose contents differ
+./scripts/dryrun.sh                # preview all macOS packages
 ```
+
+The preview prints only short target paths, such as `~/.config/nvim/init.lua`.
+New files and identical contents are omitted; an empty list prints
+`No differing files (macos).` (or `linux`).
+Use `./scripts/dryrun.sh linux` or `./scripts/dryrun.sh macos nvim` to select
+a platform or package. It never overwrites files. Stow still refuses conflicting
+regular files or symlinks during installation, even if their contents match.
+
+Arguments after `--` select `--mac` (the default) or `--linux`, followed by at
+most one package name. The name must match a directory under `macos/` or
+`linux/`; for example, `task stow -- --linux lazyvim` works once
+`linux/lazyvim/` exists. Selecting Ghostty also installs its shared settings
+and, on Linux, adds its config includes. `lid-server` remains a separate task.
 
 To bring a live config under management, copy it into `<platform>/<tool>/` at its `$HOME`-relative path, then `stow --adopt` that package once.
 
@@ -34,8 +52,8 @@ Install Git, GNU Stow and Task (the `go-task` runner), then clone this repo:
 ```sh
 git clone https://github.com/archae0pteryx/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-task stow:dry
-task stow
+task stow:dry -- --linux
+task stow -- --linux
 ```
 
 These tasks install config links, not applications or a desktop environment.
@@ -50,7 +68,7 @@ Linux setup creates `~/.config/ghostty/config` if needed and appends the shared
 and Linux includes once, preserving existing settings. On Omarchy this stays
 a regular file so its font and display tools can edit it. If your config is a
 symlink, make a backup and convert it to a regular file first. The dry run only
-previews links; it does not create or append this file.
+compares package files; it does not create or append this file.
 
 Rofi's bundled themes and applets target an X11 desktop. Install the fonts they
 reference (Nerd Fonts and Feather) and Papirus icons; applet commands in

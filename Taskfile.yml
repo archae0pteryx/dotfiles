@@ -1,17 +1,13 @@
 version: '3'
 
-# --no-folding links individual files so apps that write next to their
-# config (copyq, kitty, nvim's lazy-lock.json, ...) don't write into this repo.
-# Shared Ghostty settings live at the root; lid-server is installed separately.
+# --no-folding keeps files created beside configs out of this repo.
 
 vars:
-  PLATFORM: '{{if eq OS "darwin"}}macos{{else}}linux{{end}}'
   MACOS_PKGS:
     sh: find "{{.TASKFILE_DIR}}/macos" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort | tr '\n' ' '
   LINUX_PKGS:
     sh: find "{{.TASKFILE_DIR}}/linux" -mindepth 1 -maxdepth 1 -type d ! -name lid-server -exec basename {} \; | sort | tr '\n' ' '
   STOW: stow --no-folding --ignore='(^|/)\.DS_Store$' -t "{{.HOME}}"
-  DRY: -n -v
 
 tasks:
   default:
@@ -20,17 +16,16 @@ tasks:
       - task --list
 
   stow:
-    desc: Stow all configs for this OS
+    desc: Stow configs ([--mac|--linux] [package], default --mac)
+    silent: true
     cmds:
-      - task: '{{.PLATFORM}}'
+      - '"{{.TASKFILE_DIR}}/scripts/stow.sh" stow {{.CLI_ARGS}}'
 
   stow:dry:
-    desc: Preview stowing all configs for this OS
+    desc: List differing files ([--mac|--linux] [package], default --mac)
+    silent: true
     cmds:
-      - task: '{{.PLATFORM}}:dry'
-
-  # Existing per-package tasks still work: task macos:nvim:dry-run.
-  # Stow itself is idempotent, so re-running a task is safe.
+      - '"{{.TASKFILE_DIR}}/scripts/stow.sh" dry {{.CLI_ARGS}}'
 
   macos:
     desc: Stow all macOS configs
@@ -42,14 +37,10 @@ tasks:
 
   macos:dry:
     aliases: [macos:dry-run]
-    desc: Show what stowing all macOS configs would do
+    desc: List existing macOS files whose contents differ
+    silent: true
     cmds:
-      - task: stow:packages
-        vars: { dir: ., pkgs: ghostty, dry: '{{.DRY}}' }
-      - task: stow:packages
-        vars: { dir: macos, pkgs: '{{.MACOS_PKGS}}', dry: '{{.DRY}}' }
-
-  # Per-package macOS tasks keep the existing command names.
+      - '"{{.TASKFILE_DIR}}/scripts/dryrun.sh" macos {{.MACOS_PKGS}}'
 
   macos:git:
     desc: Stow git config
@@ -59,9 +50,9 @@ tasks:
 
   macos:git:dry-run:
     desc: Show what stowing git config would do
+    silent: true
     cmds:
-      - task: stow:packages
-        vars: { dir: macos, pkgs: git, dry: '{{.DRY}}' }
+      - '"{{.TASKFILE_DIR}}/scripts/dryrun.sh" macos git'
 
   macos:vim:
     desc: Stow vim config
@@ -71,9 +62,9 @@ tasks:
 
   macos:vim:dry-run:
     desc: Show what stowing vim config would do
+    silent: true
     cmds:
-      - task: stow:packages
-        vars: { dir: macos, pkgs: vim, dry: '{{.DRY}}' }
+      - '"{{.TASKFILE_DIR}}/scripts/dryrun.sh" macos vim'
 
   macos:nvim:
     desc: Stow nvim config
@@ -83,11 +74,9 @@ tasks:
 
   macos:nvim:dry-run:
     desc: Show what stowing nvim config would do
+    silent: true
     cmds:
-      - task: stow:packages
-        vars: { dir: macos, pkgs: nvim, dry: '{{.DRY}}' }
-
-  # Ghostty has a shared layer in the root and a macOS layer in macos/
+      - '"{{.TASKFILE_DIR}}/scripts/dryrun.sh" macos nvim'
 
   macos:ghostty:
     desc: Stow Ghostty config (shared + macOS layers)
@@ -99,13 +88,9 @@ tasks:
 
   macos:ghostty:dry-run:
     desc: Show what stowing Ghostty config would do
+    silent: true
     cmds:
-      - task: stow:packages
-        vars: { dir: ., pkgs: ghostty, dry: '{{.DRY}}' }
-      - task: stow:packages
-        vars: { dir: macos, pkgs: ghostty, dry: '{{.DRY}}' }
-
-  # macOS-only packages (stowed from macos/)
+      - '"{{.TASKFILE_DIR}}/scripts/dryrun.sh" macos ghostty'
 
   macos:alacritty:
     desc: Stow alacritty config
@@ -115,9 +100,9 @@ tasks:
 
   macos:alacritty:dry-run:
     desc: Show what stowing alacritty config would do
+    silent: true
     cmds:
-      - task: stow:packages
-        vars: { dir: macos, pkgs: alacritty, dry: '{{.DRY}}' }
+      - '"{{.TASKFILE_DIR}}/scripts/dryrun.sh" macos alacritty'
 
   macos:copyq:
     desc: Stow copyq config
@@ -127,9 +112,9 @@ tasks:
 
   macos:copyq:dry-run:
     desc: Show what stowing copyq config would do
+    silent: true
     cmds:
-      - task: stow:packages
-        vars: { dir: macos, pkgs: copyq, dry: '{{.DRY}}' }
+      - '"{{.TASKFILE_DIR}}/scripts/dryrun.sh" macos copyq'
 
   macos:hammerspoon:
     desc: Stow hammerspoon config
@@ -139,9 +124,9 @@ tasks:
 
   macos:hammerspoon:dry-run:
     desc: Show what stowing hammerspoon config would do
+    silent: true
     cmds:
-      - task: stow:packages
-        vars: { dir: macos, pkgs: hammerspoon, dry: '{{.DRY}}' }
+      - '"{{.TASKFILE_DIR}}/scripts/dryrun.sh" macos hammerspoon'
 
   macos:kitty:
     desc: Stow kitty config
@@ -151,9 +136,9 @@ tasks:
 
   macos:kitty:dry-run:
     desc: Show what stowing kitty config would do
+    silent: true
     cmds:
-      - task: stow:packages
-        vars: { dir: macos, pkgs: kitty, dry: '{{.DRY}}' }
+      - '"{{.TASKFILE_DIR}}/scripts/dryrun.sh" macos kitty'
 
   macos:starship:
     desc: Stow starship config
@@ -163,9 +148,9 @@ tasks:
 
   macos:starship:dry-run:
     desc: Show what stowing starship config would do
+    silent: true
     cmds:
-      - task: stow:packages
-        vars: { dir: macos, pkgs: starship, dry: '{{.DRY}}' }
+      - '"{{.TASKFILE_DIR}}/scripts/dryrun.sh" macos starship'
 
   macos:tmux:
     desc: Stow tmux config
@@ -175,20 +160,19 @@ tasks:
 
   macos:tmux:dry-run:
     desc: Show what stowing tmux config would do
+    silent: true
     cmds:
-      - task: stow:packages
-        vars: { dir: macos, pkgs: tmux, dry: '{{.DRY}}' }
+      - '"{{.TASKFILE_DIR}}/scripts/dryrun.sh" macos tmux'
 
   stow:packages:
     internal: true
-    desc: "Run stow for one directory's packages (pass dry to preview)"
+    desc: Run stow for one directory's packages
     dir: '{{.TASKFILE_DIR}}'
     vars:
       dir: '{{.dir}}'
       pkgs: '{{.pkgs}}'
-      dry: '{{.dry}}'
     cmds:
-      - '{{.STOW}} {{.dry}} -d "{{.TASKFILE_DIR}}/{{.dir}}" -R {{.pkgs}}'
+      - '{{.STOW}} -d "{{.TASKFILE_DIR}}/{{.dir}}" -R {{.pkgs}}'
 
   linux:
     desc: Stow Linux configs
@@ -199,11 +183,19 @@ tasks:
       - task: linux:ghostty-includes
 
   linux:dry:
-    desc: Show what stowing Linux configs would do
-    dir: '{{.TASKFILE_DIR}}'
+    desc: List existing Linux files whose contents differ
+    silent: true
     cmds:
-      - '{{.STOW}} -d "{{.TASKFILE_DIR}}" -n -v -R ghostty'
-      - '{{.STOW}} -d "{{.TASKFILE_DIR}}/linux" -n -v -R {{.LINUX_PKGS}}'
+      - '"{{.TASKFILE_DIR}}/scripts/dryrun.sh" linux {{.LINUX_PKGS}}'
+
+  linux:ghostty:
+    desc: Stow Ghostty config (shared + Linux layers)
+    cmds:
+      - task: stow:packages
+        vars: { dir: ., pkgs: ghostty }
+      - task: stow:packages
+        vars: { dir: linux, pkgs: ghostty }
+      - task: linux:ghostty-includes
 
   linux:ghostty-includes:
     desc: Point Ghostty's regular config file at the stowed shared/Linux layers
@@ -218,7 +210,6 @@ tasks:
           grep -qxF 'config-file = ?~/.config/ghostty/{{.ITEM}}' "{{.HOME}}/.config/ghostty/config" ||
           printf '\nconfig-file = ?~/.config/ghostty/{{.ITEM}}\n' >> "{{.HOME}}/.config/ghostty/config"
 
-  # System-level, so installed into /etc with sudo rather than stowed.
   linux:lid-server:
     desc: Keep running with the lid closed (never suspend)
     dir: '{{.TASKFILE_DIR}}'
