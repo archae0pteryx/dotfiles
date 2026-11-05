@@ -18,7 +18,6 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "TermClose", "TermLeave
   end,
 })
 
--- Autosave, like Zed's after_delay: write 1s after the last change.
 local timers = {}
 
 local function autosave(buf)
@@ -86,7 +85,6 @@ vim.api.nvim_create_autocmd("BufUnload", {
   end,
 })
 
--- Restore cursor position when reopening a file.
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = group,
   callback = function(args)

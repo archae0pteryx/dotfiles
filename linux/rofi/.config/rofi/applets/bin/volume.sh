@@ -2,14 +2,10 @@
 
 ## Author  : Aditya Shakya (adi1090x)
 ## Github  : @adi1090x
-#
-## Applets : Volume
 
-# Import Current Theme
 source "$HOME"/.config/rofi/applets/shared/theme.bash
 theme="$type/$style"
 
-# Volume Info
 mixer="`amixer info Master | grep 'Mixer name' | cut -d':' -f2 | tr -d \',' '`"
 speaker="`amixer get Master | tail -n1 | awk -F ' ' '{print $5}' | tr -d '[]'`"
 mic="`amixer get Capture | tail -n1 | awk -F ' ' '{print $5}' | tr -d '[]'`"
@@ -17,7 +13,6 @@ mic="`amixer get Capture | tail -n1 | awk -F ' ' '{print $5}' | tr -d '[]'`"
 active=""
 urgent=""
 
-# Speaker Info
 amixer get Master | grep '\[on\]' &>/dev/null
 if [[ "$?" == 0 ]]; then
 	active="-a 1"
@@ -29,7 +24,6 @@ else
 	sicon=''
 fi
 
-# Microphone Info
 amixer get Capture | grep '\[on\]' &>/dev/null
 if [[ "$?" == 0 ]]; then
     [ -n "$active" ] && active+=",3" || active="-a 3"
@@ -41,7 +35,6 @@ else
 	micon=''
 fi
 
-# Theme Elements
 prompt="S:$stext, M:$mtext"
 mesg="$mixer - Speaker: $speaker, Mic: $mic"
 
@@ -63,7 +56,6 @@ elif [[ ( "$theme" == *'type-2'* ) || ( "$theme" == *'type-4'* ) ]]; then
 	win_width='670px'
 fi
 
-# Options
 layout=`cat ${theme} | grep 'USE_ICON' | cut -d'=' -f2`
 if [[ "$layout" == 'NO' ]]; then
 	option_1=" Increase"
@@ -79,7 +71,6 @@ else
 	option_5=""
 fi
 
-# Rofi CMD
 rofi_cmd() {
 	rofi -theme-str "window {width: $win_width;}" \
 		-theme-str "listview {columns: $list_col; lines: $list_row;}" \
@@ -92,12 +83,10 @@ rofi_cmd() {
 		-theme ${theme}
 }
 
-# Pass variables to rofi dmenu
 run_rofi() {
 	echo -e "$option_1\n$option_2\n$option_3\n$option_4\n$option_5" | rofi_cmd
 }
 
-# Execute Command
 run_cmd() {
 	if [[ "$1" == '--opt1' ]]; then
 		amixer -Mq set Master,0 5%+ unmute
@@ -112,7 +101,6 @@ run_cmd() {
 	fi
 }
 
-# Actions
 chosen="$(run_rofi)"
 case ${chosen} in
     $option_1)

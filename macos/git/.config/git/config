@@ -13,7 +13,6 @@
 [core]
 	editor = vim
 	pager = delta
-	# Normalize to LF in the repo, check out platform-native.
 	autocrlf = input
 
 [interactive]
@@ -46,7 +45,6 @@
 [rerere]
 	enabled = true
 
-# Always talk to GitHub over SSH, even for https:// remotes and URLs.
 [url "git@github.com:"]
 	insteadOf = https://github.com/
 

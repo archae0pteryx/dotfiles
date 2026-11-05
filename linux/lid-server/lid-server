@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
-#
-# Keep an Omarchy laptop running with the lid closed so it can serve SSH.
-#
-# On Omarchy the lid is handled in two places. Hyprland's lid bind locks the
-# session and the lock blanks the panel; that stays, it is what keeps a closed
-# laptop cool. systemd-logind is what actually suspends, and that is what the
-# drop-ins next to this script turn off. See README.md for the why.
-#
-# Usage: lid-server [install|remove|status]
+# Leave Hyprland's lid lock in place so the closed laptop's panel stays off.
 
 set -euo pipefail
 
@@ -22,7 +14,6 @@ die() {
   exit 1
 }
 
-# Value of a logind Manager property or zero-argument method, unquoted.
 logind() {
   local kind="$1" name="$2"
   local verb=call
@@ -32,20 +23,17 @@ logind() {
     awk '{ gsub(/"/, "", $2); print $2 }' || true
 }
 
-# First line of the first readable file among the arguments.
 first() {
   cat "$@" 2>/dev/null | head -1 || true
 }
 
-# logind rereads logind.conf on SIGHUP. Restarting it instead can take the
-# graphical session down with it.
+# Restarting logind can end the graphical session; reload it with SIGHUP instead.
 reload_logind() {
   sudo systemctl kill -s HUP systemd-logind.service
   sleep 1
 }
 
 set_menu_suspend() {
-  # Hides or restores "Suspend" in the Omarchy system menu. Not Omarchy: skip.
   command -v omarchy-toggle >/dev/null || return 0
   omarchy-toggle suspend-off "$1"
 }

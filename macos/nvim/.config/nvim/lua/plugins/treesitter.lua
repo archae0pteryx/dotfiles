@@ -5,7 +5,6 @@ return {
     branch = "main",
     lazy = false,
     build = ":TSUpdate",
-    -- Parsers live in opts so tests/nvim can install the same list.
     opts = {
       parsers = {
         "bash", "c", "cpp", "diff", "dockerfile", "gitcommit", "go", "gomod",

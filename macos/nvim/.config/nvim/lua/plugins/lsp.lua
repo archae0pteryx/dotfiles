@@ -1,5 +1,4 @@
--- Servers mason installs and enables. The system servers track their own
--- toolchains (Go, rustup, Xcode), so they come from PATH instead.
+-- Use PATH for servers managed by Go, rustup and Xcode to match their toolchains.
 local mason_servers = {
   "basedpyright", "bashls", "jsonls", "lua_ls", "marksman",
   "terraformls", "vtsls", "yamlls",
@@ -65,7 +64,6 @@ return {
   },
 
   {
-    -- Formatters that conform.nvim calls.
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     event = "VeryLazy",
     dependencies = { "mason-org/mason.nvim" },

@@ -32,7 +32,6 @@ return {
       },
     },
     keys = {
-      -- Find
       { "<leader><space>", pick("smart"), desc = "Find files (smart)" },
       { "<leader>ff", pick("files"), desc = "Files" },
       { "<leader>fr", pick("recent"), desc = "Recent files" },
@@ -41,7 +40,6 @@ return {
       { "<leader>fc", pick("files", { cwd = vim.fn.stdpath("config") }), desc = "Config files" },
       { "<leader>e", function() Snacks.explorer() end, desc = "File explorer" },
 
-      -- Search
       { "<leader>/", pick("grep"), desc = "Grep project" },
       { "<leader>sw", pick("grep_word"), desc = "Grep word or selection", mode = { "n", "x" } },
       { "<leader>sb", pick("lines"), desc = "Buffer lines" },
@@ -54,7 +52,6 @@ return {
       { "<leader>sc", pick("commands"), desc = "Commands" },
       { "<leader>sr", pick("resume"), desc = "Resume last picker" },
 
-      -- Buffers
       { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete buffer" },
       { "<leader>bo", function() Snacks.bufdelete.other() end, desc = "Delete other buffers" },
     },

@@ -1,21 +1,13 @@
-# Ghostty terminal configuration
-
-# Fonts
 font-family = FiraCode Nerd Font
 font-size = 16
 
-# Theme
 background = #1e1e2e
 foreground = #cdd6f4
 
-# Quick terminal: position/size live in shared.conf; these are macOS-only.
-# Changing quick-terminal-position requires fully restarting Ghostty.
 quick-terminal-screen = mouse
 quick-terminal-animation-duration = 0
 
-# Keybinds
 # global: works while Ghostty is unfocused (needs Accessibility permission).
 keybind = global:alt+cmd+space=toggle_quick_terminal
 
-# Settings shared with Linux
 config-file = ?~/.config/ghostty/shared.conf

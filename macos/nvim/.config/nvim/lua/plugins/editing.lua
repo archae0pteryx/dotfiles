@@ -43,8 +43,6 @@ return {
         bash = { "shfmt" },
         zsh = { "shfmt" },
       },
-      -- Everything else (rust, c, terraform, ...) falls back to the LSP formatter.
-      -- Autosave writes skip formatting; explicit :w still formats.
       format_on_save = function(buf)
         if vim.b[buf].autosaving then
           return

@@ -1,7 +1,5 @@
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
-#
-# No CodeRabbit on this repo (see AGENTS.md). The app can still see the repo,
-# so this turns off its reviews and everything else it would post on a PR.
+# Keep CodeRabbit disabled; see AGENTS.md.
 reviews:
   auto_review:
     enabled: false

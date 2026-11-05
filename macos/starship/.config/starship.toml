@@ -46,11 +46,6 @@ style = "fg:color_fg0 bg:color_yellow"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
-# style = "dimmed white"
-# format = " [$path]($style)"
-# truncate_to_repo = true
-# truncation_length = 8
-# truncation_symbol = "…"
 
 [hostname]
 style = "bg:yellow fg:red"
@@ -112,7 +107,7 @@ format = '[ $symbol ($version) ]($style)'
 
 [time]
 disabled = true
-time_format = "%R"             # Hour:Minute Format
+time_format = "%R"
 style = "bg:#33658A"
 format = '[ ♥ $time ]($style)'
 
