@@ -16,7 +16,10 @@ fi
 differences=$({
   for package in "$@"; do
     roots=("$repo/$platform/$package")
-    if [[ $package == ghostty ]]; then roots+=("$repo/ghostty"); fi
+    case "$package" in
+      herdr|nvim) roots=("$repo/$package") ;;
+      ghostty) roots+=("$repo/ghostty") ;;
+    esac
     for root in "${roots[@]}"; do
       [[ -d $root ]] || { echo "Unknown package: $platform/$package" >&2; exit 1; }
       find "$root" \( -type f -o -type l \) ! -name .DS_Store -print0 |

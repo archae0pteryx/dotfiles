@@ -3,6 +3,7 @@ version: '3'
 # --no-folding keeps files created beside configs out of this repo.
 
 vars:
+  SHARED_PKGS: herdr nvim
   MACOS_PKGS:
     sh: find "{{.TASKFILE_DIR}}/macos" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort | tr '\n' ' '
   LINUX_PKGS:
@@ -31,7 +32,7 @@ tasks:
     desc: Stow all macOS configs
     cmds:
       - task: stow:packages
-        vars: { dir: ., pkgs: ghostty }
+        vars: { dir: ., pkgs: 'ghostty {{.SHARED_PKGS}}' }
       - task: stow:packages
         vars: { dir: macos, pkgs: '{{.MACOS_PKGS}}' }
 
@@ -40,7 +41,7 @@ tasks:
     desc: List existing macOS files whose contents differ
     silent: true
     cmds:
-      - '"{{.TASKFILE_DIR}}/scripts/dryrun.sh" macos {{.MACOS_PKGS}}'
+      - '"{{.TASKFILE_DIR}}/scripts/dryrun.sh" macos {{.SHARED_PKGS}} {{.MACOS_PKGS}}'
 
   macos:git:
     desc: Stow git config
@@ -70,7 +71,7 @@ tasks:
     desc: Stow nvim config
     cmds:
       - task: stow:packages
-        vars: { dir: macos, pkgs: nvim }
+        vars: { dir: ., pkgs: nvim }
 
   macos:nvim:dry-run:
     desc: Show what stowing nvim config would do
@@ -178,7 +179,7 @@ tasks:
     desc: Stow Linux configs
     dir: '{{.TASKFILE_DIR}}'
     cmds:
-      - '{{.STOW}} -d "{{.TASKFILE_DIR}}" -R ghostty'
+      - '{{.STOW}} -d "{{.TASKFILE_DIR}}" -R ghostty {{.SHARED_PKGS}}'
       - '{{.STOW}} -d "{{.TASKFILE_DIR}}/linux" -R {{.LINUX_PKGS}}'
       - task: linux:ghostty-includes
 
@@ -186,7 +187,7 @@ tasks:
     desc: List existing Linux files whose contents differ
     silent: true
     cmds:
-      - '"{{.TASKFILE_DIR}}/scripts/dryrun.sh" linux {{.LINUX_PKGS}}'
+      - '"{{.TASKFILE_DIR}}/scripts/dryrun.sh" linux {{.SHARED_PKGS}} {{.LINUX_PKGS}}'
 
   linux:ghostty:
     desc: Stow Ghostty config (shared + Linux layers)

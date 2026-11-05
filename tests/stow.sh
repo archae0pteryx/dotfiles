@@ -9,7 +9,7 @@ trap 'rm -rf -- "$sandbox"' EXIT
 # Exercise a checkout path with spaces without changing the real home or repo.
 checkout="$sandbox/dotfiles checkout"
 mkdir -p "$checkout"
-cp -R "$repo/Taskfile.yml" "$repo/scripts" "$repo/ghostty" "$repo/linux" "$repo/macos" "$checkout/"
+cp -R "$repo/Taskfile.yml" "$repo/scripts" "$repo/ghostty" "$repo/herdr" "$repo/nvim" "$repo/linux" "$repo/macos" "$checkout/"
 
 run_task() {
   if ! env HOME="$target" task --dir "$checkout" "$@" >"$sandbox/task.log" 2>&1; then
@@ -74,7 +74,7 @@ fi
 test "$(cat "$target/.config/nvim/init.lua")" = 'keep my config'
 
 # Equal regular files are omitted; broken links and blocked parents are listed.
-cp "$checkout/linux/nvim/.config/nvim/init.lua" "$target/.config/nvim/init.lua"
+cp "$checkout/nvim/.config/nvim/init.lua" "$target/.config/nvim/init.lua"
 run_task linux:dry
 test "$(cat "$sandbox/task.log")" = 'No differing files (linux).'
 rm "$target/.config/nvim/init.lua"

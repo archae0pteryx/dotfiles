@@ -19,7 +19,11 @@ if [[ -z $package ]]; then
   if [[ $mode == dry ]]; then platform+=:dry; fi
   exec task --silent --dir "$repo" "$platform"
 fi
-if [[ ! $package =~ ^[[:alnum:]][[:alnum:]_.-]*$ || $package == lid-server || ! -d "$repo/$platform/$package" ]]; then
+directory="$repo/$platform"
+case "$package" in
+  herdr|nvim) directory="$repo" ;;
+esac
+if [[ ! $package =~ ^[[:alnum:]][[:alnum:]_.-]*$ || $package == lid-server || ! -d "$directory/$package" ]]; then
   echo "Unknown stow package: $platform/$package" >&2
   exit 1
 fi
@@ -29,4 +33,4 @@ fi
 if [[ $package == ghostty ]]; then
   exec task --silent --dir "$repo" "$platform:ghostty"
 fi
-exec stow --no-folding --ignore='(^|/)\.DS_Store$' -t "$HOME" -d "$repo/$platform" -R "$package"
+exec stow --no-folding --ignore='(^|/)\.DS_Store$' -t "$HOME" -d "$directory" -R "$package"

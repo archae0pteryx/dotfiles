@@ -7,6 +7,8 @@ Managed with [GNU Stow](https://www.gnu.org/software/stow/) via [Task](https://t
 ```
 macos/<tool>/...   one stow package per tool; contents mirror $HOME
 linux/<tool>/...   same, for Linux hosts
+nvim/...          shared Neovim config, stowed on both platforms
+herdr/...         shared Herdr config, stowed on both platforms
 ghostty/...        shared Ghostty settings, stowed on both platforms
 ```
 
@@ -16,7 +18,7 @@ Rules:
 - Package directories are discovered automatically. `linux/lid-server` is a separate, opt-in system installer and is never stowed into `$HOME`.
 - Retired configs are deleted; git history is the archive.
 - Linux hosts get git/vim config from nix, so those packages are macOS-only.
-- Linux keeps the minimal Neovim config; macOS has the plugin-based configuration.
+- Neovim and Herdr use the same shared configuration on macOS and Linux.
 
 ## Usage
 
@@ -25,7 +27,8 @@ task stow                         # all macOS packages (default on every OS)
 task stow -- vim                   # just macos/vim
 task stow -- --mac lazyvim         # just macos/lazyvim
 task stow -- --linux               # all Linux packages
-task stow -- --linux nvim          # just linux/nvim
+task stow -- --linux nvim          # shared Neovim config
+task stow -- --linux herdr         # shared Herdr config
 task stow:dry -- --linux nvim      # list existing files whose contents differ
 ./scripts/dryrun.sh                # preview all macOS packages
 ```
@@ -38,12 +41,25 @@ a platform or package. It never overwrites files. Stow still refuses conflicting
 regular files or symlinks during installation, even if their contents match.
 
 Arguments after `--` select `--mac` (the default) or `--linux`, followed by at
-most one package name. The name must match a directory under `macos/` or
-`linux/`; for example, `task stow -- --linux lazyvim` works once
+most one package name. `nvim` and `herdr` select shared packages at the repo
+root; other names must match a directory under `macos/` or `linux/`.
+For example, `task stow -- --linux lazyvim` works once
 `linux/lazyvim/` exists. Selecting Ghostty also installs its shared settings
 and, on Linux, adds its config includes. `lid-server` remains a separate task.
 
-To bring a live config under management, copy it into `<platform>/<tool>/` at its `$HOME`-relative path, then `stow --adopt` that package once.
+For plain Stow, select shared packages from the repo root:
+
+```sh
+stow --no-folding -t "$HOME" -d ~/.dotfiles -R nvim herdr
+```
+
+When upgrading from the old platform-specific paths, unstow before pulling:
+`stow --no-folding -t "$HOME" -d macos -D nvim herdr` on macOS, or
+`stow --no-folding -t "$HOME" -d linux -D nvim` on Linux. After pulling,
+run the usual tasks to recreate the links. Back up any existing regular
+Herdr config before installing the shared package.
+
+To bring a live config under management, copy it into its package directory at its `$HOME`-relative path, then `stow --adopt` that package once.
 
 ## New Linux host
 
@@ -57,7 +73,7 @@ task stow -- --linux
 ```
 
 These tasks install config links, not applications or a desktop environment.
-Install Ghostty, Neovim, Rofi and Conky separately if you use them. On a host
+Install Ghostty, Neovim, Herdr, Rofi and Conky separately if you use them. On a host
 without nix managing Git/Vim, install and configure those separately too.
 
 Stow stops on conflicting files. Back up and move only the files it reports,
@@ -84,7 +100,7 @@ machine: it currently uses the `enp5s0` network interface, an NVIDIA GPU
 The optional [lid-server setup](linux/lid-server/README.md) disables sleep on
 a dedicated laptop server. Normal `task stow` never changes `/etc` or sleep
 settings. Existing `task linux`, `task macos` and per-package macOS commands
-remain available; for one other package use
+remain available; for one Linux-only package use
 `stow --no-folding -t "$HOME" -d linux -R <tool>` (and stow the root `ghostty`
 package too when selecting Ghostty).
 
