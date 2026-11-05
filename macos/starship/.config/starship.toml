@@ -19,7 +19,7 @@ $kubernetes\
 """
 
 palette = 'gruvbox_dark'
-
+command_timeout = 20
 [fill]
 symbol = ''
 

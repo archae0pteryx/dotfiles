@@ -2,15 +2,15 @@ version: '3'
 
 # --no-folding links individual files so apps that write next to their
 # config (copyq, kitty, nvim's lazy-lock.json, ...) don't write into this repo.
-# Linux hosts still get git/vim config from nix, so SHARED_PKGS is macOS-only.
-# COMMON_PKGS are stowed on every host.
+# Shared Ghostty settings live at the root; lid-server is installed separately.
 
 vars:
-  SHARED_PKGS: git vim
-  COMMON_PKGS: ghostty nvim
-  MACOS_PKGS: alacritty copyq ghostty hammerspoon kitty starship tmux
-  LINUX_PKGS: conky ghostty rofi
-  STOW: stow --no-folding -t {{.HOME}}
+  PLATFORM: '{{if eq OS "darwin"}}macos{{else}}linux{{end}}'
+  MACOS_PKGS:
+    sh: find "{{.TASKFILE_DIR}}/macos" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort | tr '\n' ' '
+  LINUX_PKGS:
+    sh: find "{{.TASKFILE_DIR}}/linux" -mindepth 1 -maxdepth 1 -type d ! -name lid-server -exec basename {} \; | sort | tr '\n' ' '
+  STOW: stow --no-folding --ignore='(^|/)\.DS_Store$' -t "{{.HOME}}"
   DRY: -n -v
 
 tasks:
@@ -19,81 +19,90 @@ tasks:
     cmds:
       - task --list
 
-  # Every macOS package has its own task plus a :dry-run variant, so you can
-  # install (or preview) one thing at a time: task macos:nvim:dry-run
+  stow:
+    desc: Stow all configs for this OS
+    cmds:
+      - task: '{{.PLATFORM}}'
+
+  stow:dry:
+    desc: Preview stowing all configs for this OS
+    cmds:
+      - task: '{{.PLATFORM}}:dry'
+
+  # Existing per-package tasks still work: task macos:nvim:dry-run.
   # Stow itself is idempotent, so re-running a task is safe.
 
   macos:
     desc: Stow all macOS configs
     cmds:
-      - task: stow
-        vars: { dir: ., pkgs: '{{.SHARED_PKGS}} {{.COMMON_PKGS}}' }
-      - task: stow
+      - task: stow:packages
+        vars: { dir: ., pkgs: ghostty }
+      - task: stow:packages
         vars: { dir: macos, pkgs: '{{.MACOS_PKGS}}' }
 
   macos:dry:
     aliases: [macos:dry-run]
     desc: Show what stowing all macOS configs would do
     cmds:
-      - task: stow
-        vars: { dir: ., pkgs: '{{.SHARED_PKGS}} {{.COMMON_PKGS}}', dry: '{{.DRY}}' }
-      - task: stow
+      - task: stow:packages
+        vars: { dir: ., pkgs: ghostty, dry: '{{.DRY}}' }
+      - task: stow:packages
         vars: { dir: macos, pkgs: '{{.MACOS_PKGS}}', dry: '{{.DRY}}' }
 
-  # Shared packages (stowed from the repo root, also used on Linux)
+  # Per-package macOS tasks keep the existing command names.
 
   macos:git:
     desc: Stow git config
     cmds:
-      - task: stow
-        vars: { dir: ., pkgs: git }
+      - task: stow:packages
+        vars: { dir: macos, pkgs: git }
 
   macos:git:dry-run:
     desc: Show what stowing git config would do
     cmds:
-      - task: stow
-        vars: { dir: ., pkgs: git, dry: '{{.DRY}}' }
+      - task: stow:packages
+        vars: { dir: macos, pkgs: git, dry: '{{.DRY}}' }
 
   macos:vim:
     desc: Stow vim config
     cmds:
-      - task: stow
-        vars: { dir: ., pkgs: vim }
+      - task: stow:packages
+        vars: { dir: macos, pkgs: vim }
 
   macos:vim:dry-run:
     desc: Show what stowing vim config would do
     cmds:
-      - task: stow
-        vars: { dir: ., pkgs: vim, dry: '{{.DRY}}' }
+      - task: stow:packages
+        vars: { dir: macos, pkgs: vim, dry: '{{.DRY}}' }
 
   macos:nvim:
     desc: Stow nvim config
     cmds:
-      - task: stow
-        vars: { dir: ., pkgs: nvim }
+      - task: stow:packages
+        vars: { dir: macos, pkgs: nvim }
 
   macos:nvim:dry-run:
     desc: Show what stowing nvim config would do
     cmds:
-      - task: stow
-        vars: { dir: ., pkgs: nvim, dry: '{{.DRY}}' }
+      - task: stow:packages
+        vars: { dir: macos, pkgs: nvim, dry: '{{.DRY}}' }
 
   # Ghostty has a shared layer in the root and a macOS layer in macos/
 
   macos:ghostty:
     desc: Stow Ghostty config (shared + macOS layers)
     cmds:
-      - task: stow
+      - task: stow:packages
         vars: { dir: ., pkgs: ghostty }
-      - task: stow
+      - task: stow:packages
         vars: { dir: macos, pkgs: ghostty }
 
   macos:ghostty:dry-run:
     desc: Show what stowing Ghostty config would do
     cmds:
-      - task: stow
+      - task: stow:packages
         vars: { dir: ., pkgs: ghostty, dry: '{{.DRY}}' }
-      - task: stow
+      - task: stow:packages
         vars: { dir: macos, pkgs: ghostty, dry: '{{.DRY}}' }
 
   # macOS-only packages (stowed from macos/)
@@ -101,76 +110,76 @@ tasks:
   macos:alacritty:
     desc: Stow alacritty config
     cmds:
-      - task: stow
+      - task: stow:packages
         vars: { dir: macos, pkgs: alacritty }
 
   macos:alacritty:dry-run:
     desc: Show what stowing alacritty config would do
     cmds:
-      - task: stow
+      - task: stow:packages
         vars: { dir: macos, pkgs: alacritty, dry: '{{.DRY}}' }
 
   macos:copyq:
     desc: Stow copyq config
     cmds:
-      - task: stow
+      - task: stow:packages
         vars: { dir: macos, pkgs: copyq }
 
   macos:copyq:dry-run:
     desc: Show what stowing copyq config would do
     cmds:
-      - task: stow
+      - task: stow:packages
         vars: { dir: macos, pkgs: copyq, dry: '{{.DRY}}' }
 
   macos:hammerspoon:
     desc: Stow hammerspoon config
     cmds:
-      - task: stow
+      - task: stow:packages
         vars: { dir: macos, pkgs: hammerspoon }
 
   macos:hammerspoon:dry-run:
     desc: Show what stowing hammerspoon config would do
     cmds:
-      - task: stow
+      - task: stow:packages
         vars: { dir: macos, pkgs: hammerspoon, dry: '{{.DRY}}' }
 
   macos:kitty:
     desc: Stow kitty config
     cmds:
-      - task: stow
+      - task: stow:packages
         vars: { dir: macos, pkgs: kitty }
 
   macos:kitty:dry-run:
     desc: Show what stowing kitty config would do
     cmds:
-      - task: stow
+      - task: stow:packages
         vars: { dir: macos, pkgs: kitty, dry: '{{.DRY}}' }
 
   macos:starship:
     desc: Stow starship config
     cmds:
-      - task: stow
+      - task: stow:packages
         vars: { dir: macos, pkgs: starship }
 
   macos:starship:dry-run:
     desc: Show what stowing starship config would do
     cmds:
-      - task: stow
+      - task: stow:packages
         vars: { dir: macos, pkgs: starship, dry: '{{.DRY}}' }
 
   macos:tmux:
     desc: Stow tmux config
     cmds:
-      - task: stow
+      - task: stow:packages
         vars: { dir: macos, pkgs: tmux }
 
   macos:tmux:dry-run:
     desc: Show what stowing tmux config would do
     cmds:
-      - task: stow
+      - task: stow:packages
         vars: { dir: macos, pkgs: tmux, dry: '{{.DRY}}' }
 
-  stow:
+  stow:packages:
     internal: true
     desc: "Run stow for one directory's packages (pass dry to preview)"
     dir: '{{.TASKFILE_DIR}}'
@@ -179,31 +188,35 @@ tasks:
       pkgs: '{{.pkgs}}'
       dry: '{{.dry}}'
     cmds:
-      - '{{.STOW}} {{.dry}} -d {{.dir}} -R {{.pkgs}}'
+      - '{{.STOW}} {{.dry}} -d "{{.TASKFILE_DIR}}/{{.dir}}" -R {{.pkgs}}'
 
   linux:
     desc: Stow Linux configs
     dir: '{{.TASKFILE_DIR}}'
     cmds:
-      - '{{.STOW}} -d . -R {{.COMMON_PKGS}}'
-      - '{{.STOW}} -d linux -R {{.LINUX_PKGS}}'
+      - '{{.STOW}} -d "{{.TASKFILE_DIR}}" -R ghostty'
+      - '{{.STOW}} -d "{{.TASKFILE_DIR}}/linux" -R {{.LINUX_PKGS}}'
       - task: linux:ghostty-includes
 
   linux:dry:
     desc: Show what stowing Linux configs would do
     dir: '{{.TASKFILE_DIR}}'
     cmds:
-      - '{{.STOW}} -d . -n -v -R {{.COMMON_PKGS}}'
-      - '{{.STOW}} -d linux -n -v -R {{.LINUX_PKGS}}'
+      - '{{.STOW}} -d "{{.TASKFILE_DIR}}" -n -v -R ghostty'
+      - '{{.STOW}} -d "{{.TASKFILE_DIR}}/linux" -n -v -R {{.LINUX_PKGS}}'
 
   linux:ghostty-includes:
-    desc: Point Omarchy's Ghostty config at the stowed shared/linux layers
+    desc: Point Ghostty's regular config file at the stowed shared/Linux layers
     internal: true
+    preconditions:
+      - sh: test ! -L "{{.HOME}}/.config/ghostty/config"
+        msg: Ghostty config is a symlink; make it a regular file before adding includes.
     cmds:
+      - touch "{{.HOME}}/.config/ghostty/config"
       - for: ['shared.conf', 'linux.conf']
         cmd: >-
-          grep -qF '~/.config/ghostty/{{.ITEM}}' {{.HOME}}/.config/ghostty/config ||
-          printf '\nconfig-file = ?~/.config/ghostty/{{.ITEM}}\n' >> {{.HOME}}/.config/ghostty/config
+          grep -qxF 'config-file = ?~/.config/ghostty/{{.ITEM}}' "{{.HOME}}/.config/ghostty/config" ||
+          printf '\nconfig-file = ?~/.config/ghostty/{{.ITEM}}\n' >> "{{.HOME}}/.config/ghostty/config"
 
   # System-level, so installed into /etc with sudo rather than stowed.
   linux:lid-server:

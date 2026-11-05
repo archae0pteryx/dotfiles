@@ -1,0 +1,29 @@
+~.*
+.DS_Store
+node_modules
+tmp
+.venv
+venv
+.idea
+.terraform
+.terragrunt-cache
+__pycache__
+.pytest_cache
+.devbox
+
+# Local scratch directories prefixed with triple underscores.
+___*
+
+.env
+*.secret*
+
+# Trailing slash matters: a bare `worktree*` also matched any FILE whose name
+# starts with "worktree", which silently hid tracked files such as an agent
+# definition named worktree-coder.md.
+.worktree*/
+worktree*/
+
+**/.claude/settings.local.json
+
+# Generated output dirs (e.g. repomix). Ignored, never deleted.
+_out/

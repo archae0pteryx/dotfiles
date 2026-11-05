@@ -1,0 +1,99 @@
+onboarding = false
+[theme]
+name = "terminal"
+auto_switch = false
+
+[ui.toast]
+delivery = "terminal"
+delay_seconds = 1
+
+[ui.toast.herdr]
+position = "bottom-right"
+
+[ui]
+
+show_agent_labels_on_pane_borders = true
+agent_panel_sort = "priority"
+status_indicators = "symbols"
+prompt_new_tab_name = false
+
+[keys]
+
+[[keys.command]]
+key = "prefix+k"
+type = "plugin_action"
+command = "herdr-bar.open"
+description = "command bar"
+
+# >>> furkankly.zoetrope keys (managed: `setup-keys` writes this block, `remove-keys` deletes it)
+[[keys.command]]
+key = "prefix+shift+z"
+type = "plugin_action"
+command = "furkankly.zoetrope.open"
+description = "zoetrope: session graph (overlay)"
+
+# The graph opens over the focused pane and gives the layout back when
+# it closes. The same key closes it. Two other placements, if you would
+# rather keep the graph on screen: uncomment one, or point the binding
+# above at its action. Then: herdr server reload-config
+# [[keys.command]]
+# key = "prefix+shift+v"
+# type = "plugin_action"
+# command = "furkankly.zoetrope.open-split"
+# description = "zoetrope: session graph (split)"
+
+# [[keys.command]]
+# key = "prefix+shift+c"
+# type = "plugin_action"
+# command = "furkankly.zoetrope.open-tab"
+# description = "zoetrope: session graph (tab)"
+
+# <<< furkankly.zoetrope keys
+[[keys.command]]
+key = "prefix+t"
+type = "plugin_action"
+command = "herdr-theme-picker.open"
+
+[theme.custom]
+panel_bg = "#2c323b"
+sidebar_bg = "#252a32"
+active_row_bg = "#242a32"
+selection_bg = "#eaeaea"
+surface0 = "#242a32"
+surface1 = "#666666"
+surface_dim = "#282e36"
+overlay0 = "#666666"
+overlay1 = "#eaeaea"
+text = "#eaeaea"
+subtext0 = "#eaeaea"
+accent = "#83a598"
+mauve = "#c678dd"
+green = "#98c379"
+yellow = "#e5c07b"
+red = "#d54e53"
+blue = "#83a598"
+teal = "#70c0ba"
+peach = "#ec3e45"
+
+[[keys.command]]
+key = "prefix+shift+m"
+type = "plugin_action"
+command = "nicosuave.memex.palette"
+description = "memex session palette"
+
+[ui.sound]
+enabled = false
+
+# >>> killallgit.herdr-alt-tab keys
+[[keys.command]]
+key = "alt+tab"
+type = "plugin_action"
+command = "killallgit.herdr-alt-tab.older"
+description = "Cycle panes: older"
+
+[[keys.command]]
+key = "alt+shift+tab"
+type = "plugin_action"
+command = "killallgit.herdr-alt-tab.newer"
+description = "Cycle panes: newer"
+# <<< killallgit.herdr-alt-tab keys
